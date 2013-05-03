@@ -4,17 +4,22 @@
 #include "../consts.h"
 
 
-Pixel::Pixel(Game* game,Garden* garden)
+Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
 {
     this->_game = game;
     this->_garden = garden;
     this->_state = pixelstate::DEAD;
-    this->_location = Grid(0,0);
+    this->_location = Grid(row,col);
     this->_color = PixelColor(0,0,0);
-
     clearSeedState();
     clearGrowingState();
     clearMaturedState();
+    _mainPixel = _game->_assets.pixel.pixelTexture.createSprite();
+    _mainPixel.setPosition(
+            displayconsts::PIXEL_SPACING + (col * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING)), 
+            displayconsts::PIXEL_SPACING + (row * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING))
+            );
+    _mainPixel.setColor(sf::Color(255,0,0,255));
 }
 Pixel::~Pixel()
 {
@@ -345,3 +350,12 @@ void Pixel::contributeColor(PixelColor color)
     this->_displayedColor.normalizeTo(displayconsts::NORMALIZED_TARGET_VALUE);
 }
 
+void Pixel::update(sf::Time &delta)
+{
+
+}
+
+void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
+{
+    window->draw(_mainPixel);
+}

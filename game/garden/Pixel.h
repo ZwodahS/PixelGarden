@@ -5,7 +5,13 @@
 #include "../PixelColor.h"
 #include "../g_seeds.h"
 #include "../../zf_common/Grid.h"
+
+#include <SFML/Graphics.hpp>
+
+
 #include <vector>
+
+
 
 namespace pixelstate
 {
@@ -37,7 +43,7 @@ class Garden;
 class Pixel
 {
     public:
-        Pixel(Game* game,Garden* garden);
+        Pixel(Game* game,Garden* garden,int row ,int col);
         ~Pixel();
 
         pixelstate::PixelState getState();
@@ -53,6 +59,9 @@ class Pixel
 
         bool plantSeed(Seed* seed);
         void dies(); // kill this pixel.
+    
+        void update(sf::Time &delta);
+        void draw(sf::RenderWindow* window, sf::Time &delta);
     protected:
         Game* _game;
         Garden* _garden;
@@ -61,6 +70,11 @@ class Pixel
         PixelColor _color; // the color of this pixel.
         PixelColor _displayedColor;
         int _currentStateDuration; // for counting how long the plant has been in it's current state.
+
+    /// DRAW STUFFS ///
+        sf::Sprite _mainPixel;
+
+
     ////// for state seed. //////
         Seed* _seed; // the seed that is planted here. only valid if state = SEED.    
         std::vector<Pixel*> _leafPixels; // the pixel that this seeds has grown into.

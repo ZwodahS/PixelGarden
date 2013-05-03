@@ -14,5 +14,6 @@ namespace displayconsts
     const int NORMALIZED_TARGET_VALUE = 200;
 
     const int PIXEL_SIZE = 32;
+    const int PIXEL_SPACING = 1;
 }
 #endif

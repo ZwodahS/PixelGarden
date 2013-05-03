@@ -8,6 +8,13 @@ Garden::Garden(Game* game)
 {
     _pixels = std::vector<std::vector<Pixel*> >(gameconsts::MAX_GARDEN_ROW,std::vector<Pixel*>(gameconsts::MAX_GARDEN_COL));
     this->_game = game;
+    for(int r = 0 ; r < _pixels.size () ; r++)
+    {
+        for(int c = 0 ; c < _pixels.size() ; c++)
+        {
+            _pixels[r][c] = new Pixel(game,this,r,c);
+        }
+    }
 }
 
 Garden::~Garden()
@@ -59,4 +66,21 @@ std::vector<GardenEvent*> Garden::doOneTurn()
     }
     std::vector<GardenEvent*> events = std::vector<GardenEvent*>(0);
     return events;    
+}
+
+
+void Garden::update(sf::Time &delta)
+{
+
+}
+
+void Garden::draw(sf::RenderWindow* window, sf::Time &delta)
+{
+    for(int r = 0 ; r < gameconsts::MAX_GARDEN_ROW ; r ++)
+    {
+        for(int c = 0 ; c < gameconsts::MAX_GARDEN_COL ; c++)
+        {
+            _pixels[r][c] -> draw(window,delta);
+        }
+    }
 }
