@@ -1,0 +1,39 @@
+The convention with the code should be describe here, in case i forget in the future.
+
+1) All Struct/Classes should be defined in their respective .h and .cpp. These should be capitialized.
+2) Function files should also be defined in their own .h and .cpp , but should use the format f_functions.h to denote that they contains only functions.
+3) If a class has a operator overloading, define them in their .h and .cpp
+4) Grouping headings can be done and their header files should be name g_groupname.h 
+5) Pointers are used for all classes but not POD. This allow me to know exactly what i am dealing with.
+   If POD needs to be passed by reference, such that the function modify the POD, reference(&) will be used instead of pointer.
+   
+   Internally created struct are treated as POD. 
+   Although C++ treats struct and class in the same way, semantically it will mean different things in my code.
+   Class usually have a lot of functions / behaviors. Class are meant to be reference by pointer, and are less copied and modified.
+   Struct are usually simple, and usually have very little functions / behaviors. Struct are usually meant to be copied and modified.
+
+   External structs will be treated differently depend on the 'weight' of the object, and their uses. Like SDL_Surface is always treated as a class,
+   due to the nature that it is always pass by reference and consume a large memory. On the other SDL_Rect and SDL_Color is always treated as a 
+   struct since they are always being copied instead of referenced.
+6) property of a class should have a _ prefix , like _age etc.
+7) property of structs will not have _ prefix.
+8) enums are usually defined within a namespace, to prevent conflict.
+   example :
+   
+   namespace fruits
+   {
+       enum FruitType
+       {
+           APPLE,
+           ORANGE,
+       };
+   }
+
+   This is to prevent conflict of variable, and also provide a clarity to what it is.
+
+Framework code should take care of whether i am using SDL or Opengl.
+
+The game code should be made in such a way that they do not know anything regarding SDL. This mean that NO SDL code should appear in game folder.
+This is so that when it comes to the point that SDL become slow and not reach the required Framerate, I can change to opengl without changing any
+of the code in game.
+
