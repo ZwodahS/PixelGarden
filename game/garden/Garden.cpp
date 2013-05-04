@@ -79,7 +79,8 @@ void Garden::update(sf::Time &delta)
 
 void Garden::draw(sf::RenderWindow* window, sf::Time &delta,zf::Mouse* mouse)
 {
-    sf::Vector2i mousePos = mouse->getPosition(*window);
+    sf::Vector2i pixelPos = mouse->getPosition(*window);
+    sf::Vector2f mousePos = window->mapPixelToCoords(pixelPos);
     Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
     for(int r = 0 ; r < gameconsts::MAX_GARDEN_ROW ; r ++)
     {
@@ -88,5 +89,8 @@ void Garden::draw(sf::RenderWindow* window, sf::Time &delta,zf::Mouse* mouse)
             _pixels[r][c] -> draw(window,delta);
         }
     }
-    selector->draw(window,delta,selectedGrid.col*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING), selectedGrid.row*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING));
+    if(inRange(selectedGrid.row,selectedGrid.col))
+    {
+        selector->draw(window,delta,selectedGrid.col*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING), selectedGrid.row*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING));
+    }
 }

@@ -11,7 +11,7 @@
 
 Game::Game()
 {
-    _window = new sf::RenderWindow(sf::VideoMode(621,621), "Pixel Garden");
+    _window = new sf::RenderWindow(sf::VideoMode(640,640), "Pixel Garden");
     initAssets();
 }
 
