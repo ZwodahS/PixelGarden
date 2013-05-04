@@ -140,6 +140,7 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution> &contributions)
             }
         }
     }
+    //TODO COLOR
     PixelColor newColor;
     std::vector<GrowthSegment> segments;
     Seed* newSeed = new Seed(_seeds.size(), expressedGenes, unexpressedGenes,newColor,baseAttribute,segments);
