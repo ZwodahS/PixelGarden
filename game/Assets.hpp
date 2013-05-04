@@ -13,8 +13,14 @@ struct PixelAssets
     TextureRegion SW;
 };
 
+struct FontAssets
+{
+    sf::Font upheav;
+};
+
 struct Assets
 {
     PixelAssets pixel;
+    FontAssets fonts;
 };
 #endif

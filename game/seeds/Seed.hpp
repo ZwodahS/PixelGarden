@@ -9,7 +9,7 @@
 class Seed
 {
     public:
-        Seed(int seedId,std::vector<Gene*> expressed, std::vector<Gene*> unexpressed,PixelColor color,SeedAttribute attributes,std::vector<GrowthSegment> segments);
+        Seed(int seedId,std::vector<Gene*> expressed, std::vector<Gene*> unexpressed,PixelColor color,SeedAttribute baseAttributes,std::vector<GrowthSegment> segments);
         ~Seed();
         
         int _id; // for seed id , best way to check 2 seed.
@@ -18,6 +18,8 @@ class Seed
         std::vector<Gene*> _unexpressedGenes;
         std::vector<GrowthSegment> _segments;    
         PixelColor _color;
-        SeedAttribute _attributes;
+        SeedAttribute _baseAttributes; // base attributes 
+        SeedAttribute _bonusAttributes; // bonus attributes from all the genes
+        SeedAttribute _effectiveAttributes; // the effective attributes : base attributes + bonus attributes
 };
 #endif

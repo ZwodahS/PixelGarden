@@ -148,7 +148,7 @@ void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
 
 int Pixel::getSeedGrowthTurn()
 {
-    return _seed == 0 ? 0 : _seed->_attributes.growthTurns;
+    return _seed == 0 ? 0 : _seed->_effectiveAttributes.growthTurns;
 }
 
 void Pixel::updateGrowingTurn(std::vector<Seed*> &newSeeds)
@@ -314,17 +314,17 @@ Seed* Pixel::crossBreed()
 
 int Pixel::getGrowthSegments()
 {
-    return _seed == 0 ? 0 : _seed->_attributes.growthSegments;
+    return _seed == 0 ? 0 : _seed->_effectiveAttributes.growthSegments;
 }
 
 int Pixel::getMaturedDuration()
 {
-    return _maturedSeed == 0 ? 0 : _maturedSeed->_attributes.maturedDuration;
+    return _maturedSeed == 0 ? 0 : _maturedSeed->_effectiveAttributes.maturedDuration;
 }
 
 int Pixel::getDecayDuration()
 {
-    return _maturedSeed == 0 ? 0 : _maturedSeed->_attributes.decayTurns;
+    return _maturedSeed == 0 ? 0 : _maturedSeed->_effectiveAttributes.decayTurns;
 }
 
 void Pixel::changeState(pixelstate::PixelState state)

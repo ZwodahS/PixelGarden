@@ -19,6 +19,11 @@ Gene* GeneManager::getGene(int geneId)
     return 0;
 }
 
+int GeneManager::getTotalGenes()
+{
+    return _genes.size();
+}
+
 std::vector<Gene*> GeneManager::getDefaultExpressedGenes()
 {
     std::vector<Gene*> genes;

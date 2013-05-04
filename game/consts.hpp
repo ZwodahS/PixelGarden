@@ -8,6 +8,7 @@ namespace gameconsts
     const int SAME_SEED_BONUS = 5;
     const int BREED_SEED_BONUS = 10;
     const int STARTING_SEED = 1;
+
 }
 
 namespace displayconsts

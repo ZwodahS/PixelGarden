@@ -22,6 +22,7 @@ class Game
         Screen* _currentScreen;
         bool update(sf::Time delta);
         void draw(sf::Time delta);
+        sf::Text text;
         
             
 

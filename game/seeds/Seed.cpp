@@ -1,15 +1,19 @@
 #include "Seed.hpp"
 
-Seed::Seed(int seedId,std::vector<Gene*> expressed, std::vector<Gene*> unexpressed, PixelColor color, SeedAttribute attributes, std::vector<GrowthSegment> segments)
+Seed::Seed(int seedId,std::vector<Gene*> expressed, std::vector<Gene*> unexpressed, PixelColor color, SeedAttribute baseAttributes, std::vector<GrowthSegment> segments)
 {
     this->_id = seedId;
     this->_color = color;
-    this->_attributes = attributes;
+    this->_baseAttributes = baseAttributes;
     _expressedGenes = std::vector<Gene*>(0);
     for(std::vector<Gene*>::iterator it = expressed.begin() ; it != expressed.end() ; it++)
     {
         _expressedGenes.push_back(*it);
+        _bonusAttributes+=(*it)->attributeContribution;
     }
+    _effectiveAttributes = _baseAttributes + _bonusAttributes;
+    _effectiveAttributes.setToMinMax();
+        
     _unexpressedGenes = std::vector<Gene*>(0);
     for(std::vector<Gene*>::iterator it = unexpressed.begin() ; it != unexpressed.end() ; it++)
     {

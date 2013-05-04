@@ -14,7 +14,11 @@ struct SeedAttribute
     SeedAttribute();
     SeedAttribute(int growthSeg, int growthTurns, int maturedDuration, int decayTurns,int maxExpressedTraits,int decaySeed,int maturedSeed);
     ~SeedAttribute();
+
+    SeedAttribute& operator+= (const SeedAttribute &rhs);
+
+    void setToMinMax(); // set min max value of each attribute.
 };
 
-
+SeedAttribute operator+(SeedAttribute lhs, const SeedAttribute &rhs);
 #endif

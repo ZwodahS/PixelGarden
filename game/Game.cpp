@@ -30,6 +30,9 @@ void Game::run()
     GameScreen* gs = new GameScreen(this,&mouse);
     gs->initNewGame();
     _currentScreen = gs; 
+    text = sf::Text("testing strings ... " ,_assets.fonts.upheav,16);
+    text.setPosition(100,100);
+    bool quit = false;
     while(_window->isOpen())
     {
         sf::Time delta = clock.restart();
@@ -40,10 +43,14 @@ void Game::run()
             if(event.type == sf::Event::Closed)
             {
                 _window->close();
+                quit = true;
             }
         }
-        update(delta);
-        draw(delta);
+        if(!quit)
+        {
+            update(delta);
+            draw(delta);
+        }
     }
 }
 
@@ -57,6 +64,7 @@ void Game::draw(sf::Time delta)
     if(_currentScreen != 0)
     {
         _currentScreen->draw(_window,delta);   
+        _window->draw(text);
     }
     _window->display();
 }
@@ -90,4 +98,7 @@ void Game::initAssets()
     _assets.pixel.SW = TextureRegion(region.texture,sf::IntRect(srcClip.left,srcClip.top+5,5,5));
     _assets.pixel.SE = TextureRegion(region.texture,sf::IntRect(srcClip.left+5,srcClip.top+5,5,5));
 
+
+    // load fonts
+    _assets.fonts.upheav.loadFromFile("assets/fonts/upheavtt.ttf");
 }

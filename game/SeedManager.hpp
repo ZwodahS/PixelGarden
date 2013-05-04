@@ -6,7 +6,7 @@
 
 #include "g_seeds.hpp"
 #include "GeneManager.hpp"
-
+#include "garden/ParentContribution.hpp"
 #include <vector>
 const int BASE_SEEDS = 4;
 class SeedManager
@@ -16,6 +16,9 @@ class SeedManager
         ~SeedManager();
 
         void initBaseSeeds();
+
+        Seed* crossBreed(std::vector<ParentContribution> &contributions);
+
     protected:
         std::vector<Seed*> _seeds;
         std::vector<int>   _counts;

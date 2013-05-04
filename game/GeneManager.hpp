@@ -15,6 +15,8 @@ class GeneManager
 
         std::vector<Gene*> getDefaultExpressedGenes();
         std::vector<Gene*> getDefaultUnexpressedGenes();
+
+        int getTotalGenes();
     protected:
         std::vector<Gene*> _genes;
         // put it in a easy to add format.
