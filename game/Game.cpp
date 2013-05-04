@@ -1,6 +1,8 @@
 #include "Game.hpp"
 #include "garden/Garden.hpp"
 #include "consts.hpp"
+
+
 #include "../zf_sfml/Mouse.hpp"
 #include "../zf_sfml/TextureRegion.hpp"
 
@@ -25,7 +27,9 @@ void Game::run()
 {
     sf::Clock clock;
     zf::Mouse mouse;
-    _currentScreen = new GameScreen(this,&mouse);
+    GameScreen* gs = new GameScreen(this,&mouse);
+    gs->initNewGame();
+    _currentScreen = gs; 
     while(_window->isOpen())
     {
         sf::Time delta = clock.restart();
