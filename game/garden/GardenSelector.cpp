@@ -1,10 +1,11 @@
 #include "GardenSelector.hpp"
 
-GardenSelector::GardenSelector(Game* game,int width, int height, int maxOffset , float movementPerSec = 2)
+GardenSelector::GardenSelector(Game* game,int width, int height, int maxOffset, int minOffset, float movementPerSec = 2)
 {
     this->_width = width;
     this->_height = height;
     this->_maxOffset = maxOffset;
+    this->_minOffset = minOffset;
     this->_offset = 0;
     this->_multiplier = 1;
     this->_movement = movementPerSec;
@@ -19,7 +20,7 @@ GardenSelector::GardenSelector(Game* game,int width, int height, int maxOffset ,
 void GardenSelector::draw(sf::RenderWindow* window, sf::Time delta, int x, int y)
 {
     _offset += _multiplier * (delta.asSeconds() * _movement);
-    if(_multiplier == -1 && _offset <= -(_maxOffset) )
+    if(_multiplier == -1 && _offset <= _minOffset )
     {
         _multiplier = 1;
     }

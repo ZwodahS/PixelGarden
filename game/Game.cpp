@@ -1,6 +1,6 @@
 #include "Game.hpp"
 #include "garden/Garden.hpp"
-
+#include "consts.hpp"
 #include "../zf_sfml/Mouse.hpp"
 #include "../zf_sfml/TextureRegion.hpp"
 
@@ -11,7 +11,7 @@
 
 Game::Game()
 {
-    _window = new sf::RenderWindow(sf::VideoMode(640,640), "Pixel Garden");
+    _window = new sf::RenderWindow(sf::VideoMode(displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT), "Pixel Garden");
     initAssets();
 }
 
@@ -49,7 +49,7 @@ bool Game::update(sf::Time delta)
 
 void Game::draw(sf::Time delta)
 {
-    _window->clear(sf::Color(20,20,20,255));
+    _window->clear(sf::Color(255,20,20,255));
     if(_currentScreen != 0)
     {
         _currentScreen->draw(_window,delta);   

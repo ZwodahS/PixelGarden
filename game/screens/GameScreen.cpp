@@ -8,8 +8,7 @@ GameScreen::GameScreen(Game* game,zf::Mouse* mouse )
 {
     this->_mouse = mouse;    
     this->_garden = new Garden(_game);
-    //this->_view = sf::View(sf::FloatRect(0,0,displayconsts::GARDEN_DISPLAY_WIDTH,displayconsts::GARDEN_DISPLAY_HEIGHT));
-    this->_view = sf::View(sf::FloatRect(0,0,640,640));
+    this->_view = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT));
     _view.setViewport(sf::FloatRect(0,0,1,1));
 
 }

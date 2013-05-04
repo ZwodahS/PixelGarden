@@ -7,7 +7,7 @@
 class GardenSelector
 {
     public:
-        GardenSelector(Game* game,int width, int height,int maxOffset,float movementPerSecs);
+        GardenSelector(Game* game,int width, int height,int maxOffset,int minOffset,float movementPerSecs);
         // x y is the top left position of the rectangle to enclose.
         void draw(sf::RenderWindow* window,sf::Time delta,int x , int y);
     
@@ -15,6 +15,7 @@ class GardenSelector
         int _width;
         int _height;
         int _maxOffset;
+        int _minOffset;
         float _offset;
         float _movement;
 

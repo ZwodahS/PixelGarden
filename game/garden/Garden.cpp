@@ -16,7 +16,7 @@ Garden::Garden(Game* game)
             _pixels[r][c] = new Pixel(game,this,r,c);
         }
     }
-    selector = new GardenSelector(game,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SIZE,2,5);
+    selector = new GardenSelector(game,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SIZE,3,-1,5);
 }
 
 Garden::~Garden()
