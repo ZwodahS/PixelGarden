@@ -1,10 +1,10 @@
 #ifndef _GAME_SEEDS_GENE_H_
 #define _GAME_SEEDS_GENE_H_
 
-#include "SeedAttribute.h"
-#include "Mutation.h"
+#include "SeedAttribute.hpp"
+#include "Mutation.hpp"
 
-#include "../../zf_common/Probability.h"
+#include "../../zf_common/Probability.hpp"
 struct Gene
 {
     SeedAttribute attributeContribution;

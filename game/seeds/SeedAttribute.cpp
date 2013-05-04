@@ -1,4 +1,4 @@
-#include "SeedAttribute.h"
+#include "SeedAttribute.hpp"
 SeedAttribute::SeedAttribute(int growthSeg, int growthTurns, int maturedDuration, 
         int decayTurns,int maxExpressedTraits,int decaySeed,int maturedSeed)
 {

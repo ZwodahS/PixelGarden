@@ -1,10 +1,10 @@
 #ifndef _GAME_SEEDS_SEED_H_
 #define _GAME_SEEDS_SEED_H_
 
-#include "Gene.h"
-#include "../PixelColor.h"
-#include "SeedAttribute.h"
-#include "GrowthSegment.h"
+#include "Gene.hpp"
+#include "../PixelColor.hpp"
+#include "SeedAttribute.hpp"
+#include "GrowthSegment.hpp"
 #include <vector>
 class Seed
 {

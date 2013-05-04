@@ -1,7 +1,7 @@
-#include "Pixel.h"
+#include "Pixel.hpp"
 
-#include "../Game.h"
-#include "../consts.h"
+#include "../Game.hpp"
+#include "../consts.hpp"
 
 
 Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
@@ -11,6 +11,7 @@ Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
     this->_state = pixelstate::DEAD;
     this->_location = Grid(row,col);
     this->_color = PixelColor(0,0,0);
+    this->_displayedColor = PixelColor(0,0,0);
     clearSeedState();
     clearGrowingState();
     clearMaturedState();
@@ -19,7 +20,6 @@ Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
             displayconsts::PIXEL_SPACING + (col * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING)), 
             displayconsts::PIXEL_SPACING + (row * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING))
             );
-    _mainPixel.setColor(sf::Color(255,0,0,255));
 }
 Pixel::~Pixel()
 {
@@ -357,5 +357,6 @@ void Pixel::update(sf::Time &delta)
 
 void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
 {
+    _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,255));
     window->draw(_mainPixel);
 }

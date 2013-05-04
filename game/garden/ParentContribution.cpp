@@ -1,4 +1,4 @@
-#include "ParentContribution.h"
+#include "ParentContribution.hpp"
 ParentContribution::ParentContribution(Seed* seed)
 {
     this->parent = seed;

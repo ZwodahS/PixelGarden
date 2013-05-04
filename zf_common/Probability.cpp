@@ -1,4 +1,4 @@
-#include "Probability.h"
+#include "Probability.hpp"
 #include <stdlib.h>
 
 Probability::Probability()

@@ -1,4 +1,4 @@
-#include "PixelColor.h"
+#include "PixelColor.hpp"
 PixelColor::PixelColor()
 {
     int r = 0;

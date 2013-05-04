@@ -1,4 +1,4 @@
-#include "Seed.h"
+#include "Seed.hpp"
 
 Seed::Seed(int seedId,std::vector<Gene*> expressed, std::vector<Gene*> unexpressed, PixelColor color, SeedAttribute attributes, std::vector<GrowthSegment> segments)
 {

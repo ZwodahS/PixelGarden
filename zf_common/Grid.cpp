@@ -1,4 +1,4 @@
-#include "Grid.h"
+#include "Grid.hpp"
 
 Grid::Grid()
 {
@@ -29,3 +29,4 @@ bool operator!=(const Grid &lhs, const Grid &rhs)
 {
     return !(operator==(lhs,rhs));
 }
+

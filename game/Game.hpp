@@ -1,6 +1,7 @@
 #ifndef _GAME_GAME_H_
 #define _GAME_GAME_H_
-#include "Assets.h"
+#include "g_screens.hpp"
+#include "Assets.hpp"
 #include <SFML/Graphics.hpp>
 
 class Garden;
@@ -15,8 +16,8 @@ class Game
 
         Assets _assets;
 
-        Garden* _garden;
     private:
+        Screen* _currentScreen;
 
         bool update(sf::Time delta);
         void draw(sf::Time delta);

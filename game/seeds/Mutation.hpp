@@ -1,8 +1,8 @@
 #ifndef _GAME_SEEDS_MUTATION_H_
 #define _GAME_SEEDS_MUTATION_H_
 
-#include "SeedAttribute.h"
-#include "../../zf_common/Probability.h"
+#include "SeedAttribute.hpp"
+#include "../../zf_common/Probability.hpp"
 
 struct Mutation
 {

@@ -15,5 +15,12 @@ namespace displayconsts
 
     const int PIXEL_SIZE = 32;
     const int PIXEL_SPACING = 1;
+
+    const int GARDEN_WIDTH = (PIXEL_SIZE + PIXEL_SPACING) * gameconsts::MAX_GARDEN_COL + PIXEL_SPACING;
+    const int GARDEN_HEIGHT = (PIXEL_SIZE + PIXEL_SPACING) * gameconsts::MAX_GARDEN_ROW + PIXEL_SPACING;
+
+    const int GARDEN_DISPLAY_WIDTH = GARDEN_WIDTH;
+    const int GARDEN_DISPLAY_HEIGHT = GARDEN_HEIGHT;
+
 }
 #endif

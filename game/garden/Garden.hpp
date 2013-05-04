@@ -1,12 +1,14 @@
 #ifndef _GAME_GARDEN_GARDEN_H_
 #define _GAME_GARDEN_GARDEN_H_
 
+#include "../../zf_sfml/Mouse.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
 class Pixel;
 class GardenEvent;
 class Game;
+class GardenSelector;
 class Garden
 {
     public:
@@ -25,12 +27,12 @@ class Garden
 
         std::vector<GardenEvent*> doOneTurn();
         void update(sf::Time &delta);
-        void draw(sf::RenderWindow* window,sf::Time &delta); // assuming the view has been set before drawing.
+        void draw(sf::RenderWindow* window,sf::Time &delta,zf::Mouse* mouse); // assuming the view has been set before drawing.
 
     protected:
         std::vector<std::vector<Pixel*> > _pixels;
     
         Game* _game;
-
+        GardenSelector* selector;
 };
 #endif

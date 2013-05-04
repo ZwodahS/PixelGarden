@@ -1,9 +1,10 @@
-#include "Garden.h"
-#include "Pixel.h"
-#include "GardenEvent.h"
+#include "Garden.hpp"
+#include "Pixel.hpp"
+#include "GardenEvent.hpp"
+#include "GardenSelector.hpp"
 
-#include "../consts.h"
-#include "../Game.h"
+#include "../consts.hpp"
+#include "../Game.hpp"
 Garden::Garden(Game* game)
 {
     _pixels = std::vector<std::vector<Pixel*> >(gameconsts::MAX_GARDEN_ROW,std::vector<Pixel*>(gameconsts::MAX_GARDEN_COL));
@@ -15,6 +16,7 @@ Garden::Garden(Game* game)
             _pixels[r][c] = new Pixel(game,this,r,c);
         }
     }
+    selector = new GardenSelector(game,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SIZE,2,5);
 }
 
 Garden::~Garden()
@@ -26,6 +28,7 @@ Garden::~Garden()
             delete _pixels[r][c];
         }
     }
+    delete selector;
 }
 
 bool Garden::inRange(int row, int col)
@@ -74,8 +77,10 @@ void Garden::update(sf::Time &delta)
 
 }
 
-void Garden::draw(sf::RenderWindow* window, sf::Time &delta)
+void Garden::draw(sf::RenderWindow* window, sf::Time &delta,zf::Mouse* mouse)
 {
+    sf::Vector2i mousePos = mouse->getPosition(*window);
+    Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
     for(int r = 0 ; r < gameconsts::MAX_GARDEN_ROW ; r ++)
     {
         for(int c = 0 ; c < gameconsts::MAX_GARDEN_COL ; c++)
@@ -83,4 +88,5 @@ void Garden::draw(sf::RenderWindow* window, sf::Time &delta)
             _pixels[r][c] -> draw(window,delta);
         }
     }
+    selector->draw(window,delta,selectedGrid.col*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING), selectedGrid.row*(displayconsts::PIXEL_SIZE+displayconsts::PIXEL_SPACING));
 }

@@ -1,10 +1,10 @@
 #ifndef _GAME_GARDEN_PIXEL_H_
 #define _GAME_GARDEN_PIXEL_H_
-#include "ParentContribution.h"
+#include "ParentContribution.hpp"
 
-#include "../PixelColor.h"
-#include "../g_seeds.h"
-#include "../../zf_common/Grid.h"
+#include "../PixelColor.hpp"
+#include "../g_seeds.hpp"
+#include "../../zf_common/Grid.hpp"
 
 #include <SFML/Graphics.hpp>
 

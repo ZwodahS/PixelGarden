@@ -1,4 +1,4 @@
-#include "Gene.h"
+#include "Gene.hpp"
 
 Gene::Gene(SeedAttribute attr, Probability p_ih_exp, Probability p_ih_unexp, Probability p_exp_exp, Probability p_exp_unexp , Mutation mutation)
 {

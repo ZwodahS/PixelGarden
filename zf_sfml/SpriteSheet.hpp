@@ -1,6 +1,6 @@
 #ifndef _ZF_SFML_SPRITESHEET_H_
 #define _ZF_SFML_SPRITESHEET_H_
-#include "TextureRegion.h"
+#include "TextureRegion.hpp"
 #include <SFML/Graphics.hpp>
 struct SpriteSheet
 {

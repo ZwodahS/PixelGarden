@@ -3,6 +3,7 @@ vpath %.cpp zf_sfml/
 vpath %.cpp game/
 vpath %.cpp game/seeds
 vpath %.cpp game/garden
+vpath %.cpp game/screens
 vpath %.o obj/
 
 BIN=pixelgarden
