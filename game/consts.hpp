@@ -22,7 +22,7 @@ namespace displayconsts
     const int GARDEN_DISPLAY_WIDTH = GARDEN_WIDTH;
     const int GARDEN_DISPLAY_HEIGHT = GARDEN_HEIGHT;
     
-    const int DISPLAY_WIDTH = 640;
+    const int DISPLAY_WIDTH = 960;
     const int DISPLAY_HEIGHT = 640;
 }
 #endif

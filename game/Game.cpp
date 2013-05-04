@@ -49,7 +49,7 @@ bool Game::update(sf::Time delta)
 
 void Game::draw(sf::Time delta)
 {
-    _window->clear(sf::Color(255,20,20,255));
+    _window->clear(sf::Color(20,20,20,255));
     if(_currentScreen != 0)
     {
         _currentScreen->draw(_window,delta);   

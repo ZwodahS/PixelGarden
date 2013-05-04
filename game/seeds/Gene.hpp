@@ -7,6 +7,7 @@
 #include "../../zf_common/Probability.hpp"
 struct Gene
 {
+    int id;
     SeedAttribute attributeContribution;
     
     Probability inheritanceProbability_expressed; // the chance of this being inherited if this is expressed in parent.
@@ -14,8 +15,8 @@ struct Gene
     Probability expressedProbability_expressed; // the chance of this gene being expressed, if inherited.
     Probability expressedProbability_unexpressed; // the chance of this gene being expressed, if inherited.
 
-    Mutation mutation;
-    Gene(SeedAttribute attributes, Probability prob_inherit_expressed, 
+    Mutation mutation; // only occurs if the gene is expressed.
+    Gene(int id,SeedAttribute attributes, Probability prob_inherit_expressed, 
             Probability prob_inherit_unexp, Probability prob_exp_exp, Probability prob_exp_unexp, Mutation mutation);
     ~Gene();
 };
