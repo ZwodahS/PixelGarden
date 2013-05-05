@@ -33,7 +33,7 @@ void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
     sf::Vector2f position = window->mapPixelToCoords(pixelPos);
     for(int i = 0 ; i < _drawSeeds.size() ; i++)
     {
-        if(_drawSeeds[i]->containsIn(position))
+        if(_drawSeeds[i]->contains(position))
         {
             _drawSeeds[i]->draw(window,delta,true);
         }
@@ -46,7 +46,25 @@ void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
 
 void SeedScreen::update(sf::RenderWindow* window, sf::Time delta)
 {
-
+    if(_game->_mouse->_left.thisReleased) // if the left mouse is released.
+    {
+        // set the selected seed to be the seed. perhaps hide the screen ?
+        Seed* seed = 0;
+        sf::Vector2i pixelCoor = _game->_mouse->getPosition(*window);
+        sf::Vector2f mousePos = window->mapPixelToCoords(pixelCoor);
+        for(int i = 0 ; i < _drawSeeds.size() ; i++)
+        {
+            if(_drawSeeds[i]->contains(mousePos))
+            {
+                seed = _drawSeeds[i]->_seed;
+                break;
+            }
+        }
+        if(seed!=0)
+        {
+            _data->selectedSeed = seed;
+        }
+    }
 }
 
 SeedSlot::SeedSlot(Game* game, Seed* seed, int count)
@@ -100,7 +118,7 @@ void SeedSlot::draw(sf::RenderWindow* window, sf::Time delta, bool selected)
     window->draw(_countText);   
 }
 
-bool SeedSlot::containsIn(sf::Vector2f position)
+bool SeedSlot::contains(sf::Vector2f position)
 {
     return _containBound.contains(position);    
 }

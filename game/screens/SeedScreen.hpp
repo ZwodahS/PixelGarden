@@ -37,7 +37,7 @@ class SeedSlot  // defines a slot in the seed screen, to draw the seed and the n
         void updateValues();
         void draw(sf::RenderWindow* window, sf::Time delta,bool selected = false);
 
-        bool containsIn(sf::Vector2f position); 
+        bool contains(sf::Vector2f position); 
     private:
         sf::Rect<float> _containBound;
         sf::Sprite _iconSprite;

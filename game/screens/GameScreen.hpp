@@ -33,6 +33,8 @@ class GameScreen : public Screen
         sf::View _gardenView;
         sf::View _seedView;
         sf::View _hudView;
+
+        sf::Text _hud_seedName;
 };
 
 #endif

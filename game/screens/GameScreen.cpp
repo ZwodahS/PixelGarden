@@ -15,6 +15,10 @@ GameScreen::GameScreen(Game* game)
     this->_hudView.setViewport(sf::FloatRect(0,0,1,1));
     this->_data = 0;
     this->_seedScreen = 0;
+
+    this->_hud_seedName = sf::Text(" ",_game->_assets.fonts.upheav,16);
+    this->_hud_seedName.setPosition(630,20);
+    this->_hud_seedName.setColor(sf::Color::White);
 }
 
 GameScreen::~GameScreen()
@@ -45,6 +49,16 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     {
         _seedScreen->draw(window,delta);
     }
+
+    if(_data->selectedSeed != 0)
+    {
+        this->_hud_seedName.setString(zf::toString(_data->selectedSeed->_id));
+    }
+    else
+    {
+        this->_hud_seedName.setString("no seed selected");
+    }
+    window->draw(_hud_seedName);
 }
 
 
