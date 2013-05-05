@@ -3,7 +3,7 @@
 
 #include "Screen.hpp"
 #include "../GameData.hpp"
-
+#include "../../zf_common/f_conversion.hpp"
 #include "../../zf_sfml/Mouse.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -17,7 +17,6 @@ class SeedScreen : public Screen
 
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
         virtual void update(sf::Time delta);
-
 
     private:
         std::vector<SeedSlot*> _drawSeeds;

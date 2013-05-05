@@ -11,7 +11,7 @@ Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
     this->_state = pixelstate::DEAD;
     this->_location = Grid(row,col);
     this->_color = PixelColor(0,0,0);
-    this->_displayedColor = PixelColor(0,255,0);
+    this->_displayedColor = PixelColor(20,20,20);
     clearSeedState();
     clearGrowingState();
     clearMaturedState();

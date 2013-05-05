@@ -8,7 +8,7 @@ InputControl::InputControl()
 InputControl::~InputControl()
 {
 }
-void InputControl::update()
+void InputControl::update(sf::Time delta)
 {
     zf_inputs::processKey(open_inv, sf::Keyboard::isKeyPressed(_openSeedScreen));
     zf_inputs::processKey(processOneTurn, sf::Keyboard::isKeyPressed(_oneTurn));    

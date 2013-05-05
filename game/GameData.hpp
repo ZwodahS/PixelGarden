@@ -10,12 +10,14 @@ struct GameData
     SeedManager* seedManager;
     GeneManager* geneManager;
     Garden* garden;
-
+    
+    Seed* selectedSeed;
     GameData(SeedManager* sM, GeneManager* gM, Garden* garden)
     {
         this->seedManager = sM;
         this->geneManager = gM;
         this->garden = garden;
+        this->selectedSeed = 0;
     }
     ~GameData()
     {

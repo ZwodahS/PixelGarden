@@ -38,6 +38,7 @@ void Game::run()
     {
         sf::Time delta = clock.restart();
         _mouse->update(delta);
+        _keyInput->update(delta);
         sf::Event event;
         while(_window->pollEvent(event))
         {
@@ -58,6 +59,10 @@ void Game::run()
 
 bool Game::update(sf::Time delta)
 {
+    if(_currentScreen != 0)
+    {
+        _currentScreen->update(delta);
+    }
 }
 
 void Game::draw(sf::Time delta)

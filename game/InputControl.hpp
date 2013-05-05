@@ -11,7 +11,7 @@ class InputControl
         InputControl();
         ~InputControl();
 
-        void update();
+        void update(sf::Time delta);
 
     private:
         sf::Keyboard::Key _openSeedScreen;

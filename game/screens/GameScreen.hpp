@@ -26,6 +26,8 @@ class GameScreen : public Screen
         GameData* _data;        
         void initNewGame();
         void showSeedScreen();
+        void hideSeedScreen();
+        void toggleSeedScreen();
     private:
         SeedScreen* _seedScreen;
         sf::View _gardenView;

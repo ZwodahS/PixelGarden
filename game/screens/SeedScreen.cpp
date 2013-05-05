@@ -56,10 +56,9 @@ SeedSlot::SeedSlot(Game* game, Seed* seed, int count)
     this->_count = count;
     this->_position = sf::Vector2i(0,0);
     this->_iconSprite = _game->_assets.pixel.pixelTexture.createSprite();
-    this->_countText.setFont(_game->_assets.fonts.upheav);
-    this->_countText.setCharacterSize(16);
-    this->_border = sf::RectangleShape(sf::Vector2f(48,48));
+    this->_countText = sf::Text(" ",_game->_assets.fonts.upheav,20);
     this->_containBound = sf::Rect<float>(0,0,48,48);
+    this->_border = sf::RectangleShape(sf::Vector2f(48,48));
 }
 
 SeedSlot::~SeedSlot()
@@ -72,7 +71,16 @@ void SeedSlot::updateValues()
     _containBound.top = _position.y + 8;
     _border.setPosition(_position.x+8,_position.y+8);
     _iconSprite.setPosition(_position.x+16,_position.y+16);
-    _countText.setPosition(_position.x+48,_position.y+48);
+    _countText.setPosition(_position.x+32,_position.y+32);
+    _countText.setString(zf::toString(_count));
+    if(_count > 0)
+    {
+        _countText.setColor(sf::Color::Green);
+    }
+    else
+    {
+        _countText.setColor(sf::Color::Red);
+    }
     PixelColor color = _seed->_color;
     color.normalizeTo(255);
     _iconSprite.setColor(sf::Color(color.r,color.g,color.b));

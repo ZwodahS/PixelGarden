@@ -22,6 +22,10 @@ GameScreen::~GameScreen()
     {
         delete _data;
     }
+    if(_seedScreen != 0)
+    {
+        delete _seedScreen;
+    }
 }
 
 void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
@@ -45,7 +49,23 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
 
 void GameScreen::update(sf::Time delta)
 {
-
+    // inventory opening will prevent other inputs from being trigger.
+    if(_game->_keyInput->open_inv.thisPressed)
+    {
+        toggleSeedScreen();
+    }
+    else 
+    {
+        // if the seed screen is open, let it do its own input handling.
+        if(_seedScreen != 0 )
+        {
+            _seedScreen->update(delta);
+        }
+        else
+        {
+            
+        }
+    }
 }
 
 void GameScreen::initNewGame()
@@ -55,10 +75,27 @@ void GameScreen::initNewGame()
     SeedManager* seedManager = new SeedManager(geneManager);
     Garden* garden = new Garden(_game);
     _data = new GameData(seedManager,geneManager,garden);
-    showSeedScreen();
 }
 
 void GameScreen::showSeedScreen()
 {
     _seedScreen = new SeedScreen(_game,_data);
+}
+
+void GameScreen::hideSeedScreen()
+{
+    delete _seedScreen;
+    _seedScreen = 0;
+}
+
+void GameScreen::toggleSeedScreen()
+{
+    if(_seedScreen != 0)
+    {
+        hideSeedScreen();
+    }
+    else
+    {
+        showSeedScreen();
+    }
 }
