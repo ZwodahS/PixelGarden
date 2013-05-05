@@ -57,6 +57,7 @@ void GameScreen::initNewGame()
     SeedManager* seedManager = new SeedManager(geneManager);
     Garden* garden = new Garden(_game);
     _data = new GameData(seedManager,geneManager,garden);
+    showSeedScreen();
 }
 
 void GameScreen::showSeedScreen()

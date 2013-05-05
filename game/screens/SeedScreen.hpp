@@ -37,7 +37,7 @@ class SeedSlot  // defines a slot in the seed screen, to draw the seed and the n
     private:
         sf::Sprite _iconSprite;
         sf::Text   _countText;
-
+        sf::RectangleShape  _border;
 };
 
 #endif
