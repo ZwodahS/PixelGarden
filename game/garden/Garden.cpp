@@ -5,6 +5,8 @@
 
 #include "../consts.hpp"
 #include "../Game.hpp"
+
+
 Garden::Garden(Game* game)
 {
     _pixels = std::vector<std::vector<Pixel*> >(gameconsts::MAX_GARDEN_ROW,std::vector<Pixel*>(gameconsts::MAX_GARDEN_COL));
@@ -29,6 +31,16 @@ Garden::~Garden()
         }
     }
     delete selector;
+}
+
+bool Garden::plantSeed(Seed* seed, Grid grid)
+{
+    Pixel* pixel = pixelAt(grid.row,grid.col);
+    if(pixel == 0)
+    {
+        return false;
+    }
+    return pixel->plantSeed(seed);
 }
 
 bool Garden::inRange(int row, int col)

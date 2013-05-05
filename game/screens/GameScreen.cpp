@@ -80,6 +80,15 @@ void GameScreen::update(sf::RenderWindow* window, sf::Time delta)
         else
         {
             window->setView(_gardenView);
+            if(_data->selectedSeed != 0)
+            {
+                if(_game->_mouse->_left.thisReleased)
+                {
+                    sf::Vector2f mousePos = _game->_mouse->getWorldPosition(*window);
+                    Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
+                    _data->garden->plantSeed(_data->selectedSeed, selectedGrid);
+                }
+            }
         }
     }
 }

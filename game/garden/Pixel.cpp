@@ -1,5 +1,5 @@
 #include "Pixel.hpp"
-
+#include "../g_seeds.hpp"
 #include "../Game.hpp"
 #include "../consts.hpp"
 
@@ -34,6 +34,8 @@ bool Pixel::plantSeed(Seed* seed)
     }
     _seed = seed;
     _maturedSeed = seed;
+    this->_color = _seed->_color;
+    this->_displayedColor = _color;
     return true;
 }
 

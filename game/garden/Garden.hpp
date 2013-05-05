@@ -1,7 +1,9 @@
 #ifndef _GAME_GARDEN_GARDEN_H_
 #define _GAME_GARDEN_GARDEN_H_
 
+#include "../../zf_common/Grid.hpp"
 #include "../../zf_sfml/Mouse.hpp"
+#include "../g_seeds.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -24,6 +26,8 @@ class Garden
          * 2) All Pixel will check if they are matured.
          * 3) Mi
          */
+    
+        bool plantSeed(Seed* seed, Grid grid);
 
         std::vector<GardenEvent*> doOneTurn();
         void update(sf::Time &delta);
