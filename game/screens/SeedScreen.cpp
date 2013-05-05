@@ -2,11 +2,10 @@
 #include "../Game.hpp"
 #include <iostream>
 
-SeedScreen::SeedScreen(Game* game,GameData* data,zf::Mouse* mouse)
+SeedScreen::SeedScreen(Game* game,GameData* data)
     :Screen(game)
 {
     this->_data = data;
-    this->_mouse = mouse;
     _drawSeeds = std::vector<SeedSlot*>(0);
     // for each seed in the game, create a sprite for it.
     int i = 0;
@@ -30,7 +29,7 @@ SeedScreen::~SeedScreen()
 
 void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
 {
-    sf::Vector2i pixelPos = _mouse->getPosition(*window);
+    sf::Vector2i pixelPos = _game->_mouse->getPosition(*window);
     sf::Vector2f position = window->mapPixelToCoords(pixelPos);
     for(int i = 0 ; i < _drawSeeds.size() ; i++)
     {

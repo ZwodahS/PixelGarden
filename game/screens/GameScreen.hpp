@@ -17,7 +17,7 @@ class SeedScreen;
 class GameScreen : public Screen
 {
     public:
-        GameScreen(Game* game,zf::Mouse* mouse);
+        GameScreen(Game* game);
         ~GameScreen();
 
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
@@ -27,7 +27,6 @@ class GameScreen : public Screen
         void initNewGame();
         void showSeedScreen();
     private:
-        zf::Mouse* _mouse;
         SeedScreen* _seedScreen;
         sf::View _gardenView;
         sf::View _seedView;

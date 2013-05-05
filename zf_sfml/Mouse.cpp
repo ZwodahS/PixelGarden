@@ -1,5 +1,5 @@
 #include "Mouse.hpp"
-#include "zf_inputs.hpp"
+#include "../zf_common/f_inputs.hpp"
 
 zf::Mouse::Mouse()
 {

@@ -12,7 +12,7 @@ class SeedSlot;
 class SeedScreen : public Screen
 {
     public:
-        SeedScreen(Game* game,GameData* data,zf::Mouse* mouse);
+        SeedScreen(Game* game,GameData* data);
         ~SeedScreen();
 
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
@@ -22,7 +22,6 @@ class SeedScreen : public Screen
     private:
         std::vector<SeedSlot*> _drawSeeds;
         GameData* _data;
-        zf::Mouse* _mouse;
 };
 
 // this is an internal class of seed screen , so no point declaring outside of here.

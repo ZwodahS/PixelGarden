@@ -4,10 +4,9 @@
 #include "../Game.hpp"
 #include "../../zf_sfml/Mouse.hpp"
 
-GameScreen::GameScreen(Game* game,zf::Mouse* mouse )
+GameScreen::GameScreen(Game* game)
     :Screen(game)
 {
-    this->_mouse = mouse;    
     this->_gardenView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT));
     _gardenView.setViewport(sf::FloatRect(0,0,1,1));
     this->_seedView = sf::View(sf::FloatRect(0,0,0.8f * displayconsts::DISPLAY_WIDTH, 0.8f * displayconsts::DISPLAY_HEIGHT));
@@ -30,7 +29,7 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     window->setView(_gardenView);
     if(_seedScreen == 0)
     {
-        _data->garden->draw(window,delta,_mouse);
+        _data->garden->draw(window,delta,_game->_mouse);
     }
     else
     {
@@ -61,5 +60,5 @@ void GameScreen::initNewGame()
 
 void GameScreen::showSeedScreen()
 {
-    _seedScreen = new SeedScreen(_game,_data,_mouse);
+    _seedScreen = new SeedScreen(_game,_data);
 }

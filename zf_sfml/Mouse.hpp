@@ -1,7 +1,7 @@
 #ifndef _ZF_SFML_MOUSE_H_
 #define _ZF_SFML_MOUSE_H_
 
-#include "InputState.hpp"
+#include "../zf_common/InputState.hpp"
 
 #include <SFML/Window.hpp>
 namespace zf

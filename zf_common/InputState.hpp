@@ -1,5 +1,5 @@
-#ifndef _ZF_SFML_H_
-#define _ZF_SFML_H_
+#ifndef _ZF_COMMON_INPUTSTATE_H_
+#define _ZF_COMMON_INPUTSTATE_H_
 struct InputState
 {
     bool thisDown; // bool representing if this key is down this frame.

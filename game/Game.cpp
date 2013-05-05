@@ -15,26 +15,29 @@ Game::Game()
 {
     _window = new sf::RenderWindow(sf::VideoMode(displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT), "Pixel Garden");
     initAssets();
+    this->_mouse = new zf::Mouse();
+    this->_keyInput   = new InputControl();
 }
 
 Game::~Game()
 {
     delete _window;
+    delete _mouse;
+    delete _keyInput;
 }
 
 
 void Game::run()
 {
     sf::Clock clock;
-    zf::Mouse mouse;
-    GameScreen gs = GameScreen(this,&mouse);
+    GameScreen gs = GameScreen(this);
     gs.initNewGame();
     _currentScreen = &gs; 
     bool quit = false;
     while(_window->isOpen())
     {
         sf::Time delta = clock.restart();
-        mouse.update(delta);
+        _mouse->update(delta);
         sf::Event event;
         while(_window->pollEvent(event))
         {
