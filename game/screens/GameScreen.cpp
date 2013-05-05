@@ -41,7 +41,6 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     {
         _seedScreen->draw(window,delta);
     }
-
 }
 
 
@@ -62,5 +61,5 @@ void GameScreen::initNewGame()
 
 void GameScreen::showSeedScreen()
 {
-    _seedScreen = new SeedScreen(_game,_data);
+    _seedScreen = new SeedScreen(_game,_data,_mouse);
 }

@@ -2,10 +2,11 @@
 #include "../Game.hpp"
 #include <iostream>
 
-SeedScreen::SeedScreen(Game* game,GameData* data)
+SeedScreen::SeedScreen(Game* game,GameData* data,zf::Mouse* mouse)
     :Screen(game)
 {
     this->_data = data;
+    this->_mouse = mouse;
     _drawSeeds = std::vector<SeedSlot*>(0);
     // for each seed in the game, create a sprite for it.
     int i = 0;
@@ -29,9 +30,18 @@ SeedScreen::~SeedScreen()
 
 void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
 {
+    sf::Vector2i pixelPos = _mouse->getPosition(*window);
+    sf::Vector2f position = window->mapPixelToCoords(pixelPos);
     for(int i = 0 ; i < _drawSeeds.size() ; i++)
     {
-        _drawSeeds[i]->draw(window,delta);
+        if(_drawSeeds[i]->containsIn(position))
+        {
+            _drawSeeds[i]->draw(window,delta,true);
+        }
+        else
+        {
+            _drawSeeds[i]->draw(window,delta);
+        }
     }
 }
 
@@ -49,7 +59,8 @@ SeedSlot::SeedSlot(Game* game, Seed* seed, int count)
     this->_iconSprite = _game->_assets.pixel.pixelTexture.createSprite();
     this->_countText.setFont(_game->_assets.fonts.upheav);
     this->_countText.setCharacterSize(16);
-    this->_border = sf::RectangleShape(sf::Vector2f(64,64));
+    this->_border = sf::RectangleShape(sf::Vector2f(48,48));
+    this->_containBound = sf::Rect<float>(0,0,48,48);
 }
 
 SeedSlot::~SeedSlot()
@@ -58,16 +69,31 @@ SeedSlot::~SeedSlot()
 
 void SeedSlot::updateValues()
 {
-    _border.setPosition(_position.x,_position.y);
+    _containBound.left = _position.x + 8;
+    _containBound.top = _position.y + 8;
+    _border.setPosition(_position.x+8,_position.y+8);
     _iconSprite.setPosition(_position.x+16,_position.y+16);
     _countText.setPosition(_position.x+48,_position.y+48);
     PixelColor color = _seed->_color;
     color.normalizeTo(255);
     _iconSprite.setColor(sf::Color(color.r,color.g,color.b));
 }
-void SeedSlot::draw(sf::RenderWindow* window, sf::Time delta)
+void SeedSlot::draw(sf::RenderWindow* window, sf::Time delta, bool selected)
 {
+    if(selected)
+    {
+        _border.setFillColor(sf::Color::Yellow);
+    }
+    else
+    {
+        _border.setFillColor(sf::Color::White);
+    }
     window->draw(_border);
     window->draw(_iconSprite);
     window->draw(_countText);   
+}
+
+bool SeedSlot::containsIn(sf::Vector2f position)
+{
+    return _containBound.contains(position);    
 }
