@@ -27,6 +27,7 @@ class Garden
 
         std::vector<GardenEvent*> doOneTurn();
         void update(sf::Time &delta);
+        void draw(sf::RenderWindow* window,sf::Time &delta); // draw without selection, usually when there is a window abovw
         void draw(sf::RenderWindow* window,sf::Time &delta,zf::Mouse* mouse); // assuming the view has been set before drawing.
 
     protected:

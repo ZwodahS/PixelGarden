@@ -19,6 +19,11 @@ class SeedManager
 
         Seed* crossBreed(std::vector<ParentContribution> &contributions);
 
+
+        std::vector<Seed*>::iterator getIterator();
+        std::vector<Seed*>::iterator end();
+
+        int getCount(Seed* seed);
     protected:
         std::vector<Seed*> _seeds;
         std::vector<int>   _counts;

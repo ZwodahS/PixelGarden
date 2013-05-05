@@ -3,4 +3,5 @@
 
 #include "screens/Screen.hpp"
 #include "screens/GameScreen.hpp"
+#include "screens/SeedScreen.hpp"
 #endif

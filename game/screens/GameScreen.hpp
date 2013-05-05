@@ -7,12 +7,13 @@
 #include "../SeedManager.hpp"
 #include "../g_seeds.hpp"
 #include "../g_garden.hpp"
-
+#include "../GameData.hpp"
 #include "../../zf_sfml/Mouse.hpp"
 
 #include <SFML/Graphics.hpp>
 
 class Game;
+class SeedScreen;
 class GameScreen : public Screen
 {
     public:
@@ -22,16 +23,14 @@ class GameScreen : public Screen
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
         virtual void update(sf::Time delta);
 
-        GeneManager* _geneManager;
-        SeedManager* _seedManager;
-        
+        GameData* _data;        
         void initNewGame();
+        void showSeedScreen();
     private:
         zf::Mouse* _mouse;
-
-        Garden* _garden;
-
-        sf::View _view;
+        SeedScreen* _seedScreen;
+        sf::View _gardenView;
+        sf::View _seedView;
 };
 
 #endif

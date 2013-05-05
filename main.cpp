@@ -5,7 +5,7 @@ int main(int argc , char * argv[])
 {
     srand(time(NULL));
     
-    Game g;
-    g.run();
-
+    Game* g = new Game();
+    g->run();
+    delete g;
 }

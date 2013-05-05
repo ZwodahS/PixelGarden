@@ -2,6 +2,7 @@ The convention with the code should be describe here, in case i forget in the fu
 
 1) All Struct/Classes should be defined in their respective .h and .cpp. These should be capitialized.
 2) Function files should also be defined in their own .h and .cpp , but should use the format f_functions.h to denote that they contains only functions.
+   However, if a class is used internally by another class, it can be defined in the same file. Do so only if NO other class uses that internal class.
 3) If a class has a operator overloading, define them in their .h and .cpp
 4) Grouping headings can be done and their header files should be name g_groupname.h 
 5) Pointers are used for all classes but not POD. This allow me to know exactly what i am dealing with.

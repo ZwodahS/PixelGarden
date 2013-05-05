@@ -16,6 +16,22 @@ SeedManager::~SeedManager()
 
 }
 
+std::vector<Seed*>::iterator SeedManager::getIterator()
+{
+    return _seeds.begin();
+}
+
+std::vector<Seed*>::iterator SeedManager::end()
+{
+    return _seeds.end();
+}
+
+
+int SeedManager::getCount(Seed* seed)
+{
+    return _counts[seed->_id];
+}
+
 void SeedManager::initBaseSeeds()
 {
     std::vector<Gene*> expressedGenes = _genesManager->getDefaultExpressedGenes();
