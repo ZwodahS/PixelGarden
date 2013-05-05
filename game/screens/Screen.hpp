@@ -11,7 +11,7 @@ class Screen
         ~Screen();
         
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
-        virtual void update(sf::Time delta);
+        virtual void update(sf::RenderWindow* window, sf::Time delta);
     protected:
         
         Game* _game;

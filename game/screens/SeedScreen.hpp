@@ -16,7 +16,7 @@ class SeedScreen : public Screen
         ~SeedScreen();
 
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
-        virtual void update(sf::Time delta);
+        virtual void update(sf::RenderWindow* window, sf::Time delta);
 
     private:
         std::vector<SeedSlot*> _drawSeeds;

@@ -44,7 +44,7 @@ void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
     }
 }
 
-void SeedScreen::update(sf::Time delta)
+void SeedScreen::update(sf::RenderWindow* window, sf::Time delta)
 {
 
 }

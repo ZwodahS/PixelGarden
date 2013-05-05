@@ -21,7 +21,7 @@ class GameScreen : public Screen
         ~GameScreen();
 
         virtual void draw(sf::RenderWindow* window, sf::Time delta);
-        virtual void update(sf::Time delta);
+        virtual void update(sf::RenderWindow* window, sf::Time delta);
 
         GameData* _data;        
         void initNewGame();
@@ -32,6 +32,7 @@ class GameScreen : public Screen
         SeedScreen* _seedScreen;
         sf::View _gardenView;
         sf::View _seedView;
+        sf::View _hudView;
 };
 
 #endif

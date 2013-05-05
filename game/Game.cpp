@@ -61,7 +61,7 @@ bool Game::update(sf::Time delta)
 {
     if(_currentScreen != 0)
     {
-        _currentScreen->update(delta);
+        _currentScreen->update(_window, delta);
     }
 }
 

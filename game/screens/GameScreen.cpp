@@ -8,10 +8,11 @@ GameScreen::GameScreen(Game* game)
     :Screen(game)
 {
     this->_gardenView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT));
-    _gardenView.setViewport(sf::FloatRect(0,0,1,1));
+    this->_gardenView.setViewport(sf::FloatRect(0,0,1,1));
     this->_seedView = sf::View(sf::FloatRect(0,0,0.8f * displayconsts::DISPLAY_WIDTH, 0.8f * displayconsts::DISPLAY_HEIGHT));
-    _seedView.setViewport(sf::FloatRect(0.1f,0.1f,0.8f,0.8f));
-    
+    this->_seedView.setViewport(sf::FloatRect(0.1f,0.1f,0.8f,0.8f));
+    this->_hudView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH, displayconsts::DISPLAY_HEIGHT));
+    this->_hudView.setViewport(sf::FloatRect(0,0,1,1));
     this->_data = 0;
     this->_seedScreen = 0;
 }
@@ -47,7 +48,7 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
 }
 
 
-void GameScreen::update(sf::Time delta)
+void GameScreen::update(sf::RenderWindow* window, sf::Time delta)
 {
     // inventory opening will prevent other inputs from being trigger.
     if(_game->_keyInput->open_inv.thisPressed)
@@ -59,11 +60,12 @@ void GameScreen::update(sf::Time delta)
         // if the seed screen is open, let it do its own input handling.
         if(_seedScreen != 0 )
         {
-            _seedScreen->update(delta);
+            window->setView(_seedView);
+            _seedScreen->update(window, delta);
         }
         else
         {
-            
+            window->setView(_gardenView);
         }
     }
 }

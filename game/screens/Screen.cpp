@@ -14,7 +14,7 @@ void Screen::draw(sf::RenderWindow* window, sf::Time delta)
 
 }
 
-void Screen::update(sf::Time delta)
+void Screen::update(sf::RenderWindow* window, sf::Time delta)
 {
 
 }
