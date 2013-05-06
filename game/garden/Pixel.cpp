@@ -41,7 +41,9 @@ bool Pixel::plantSeed(Seed* seed)
     _seed = seed;
     _maturedSeed = seed;
     this->_accumulatedColor = _seed->_color;
+    debug::print(seed->_color);
     this->_displayedColor = this->_accumulatedColor;
+    debug::print(_displayedColor);
     this->_state = pixelstate::SEED;
     this->_plantState = plantstate::GROWING;
     return true;
@@ -338,7 +340,8 @@ void Pixel::updateDecayingState(std::vector<Seed*> &newSeeds)
 
 Seed* Pixel::crossBreed()
 {
-    
+    Seed* seed = _seedM->crossBreed(_parentsContributions);
+    return seed;
 }
 
 
@@ -405,7 +408,14 @@ void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
     }
     else
     {
-        _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,255));
+        if(_state == pixelstate::DECAYING || _plantState == plantstate::DECAYING)
+        {
+            _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,100));
+        }
+        else
+        {
+            _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,255));
+        }
     }
     window->draw(_mainPixel);
 }

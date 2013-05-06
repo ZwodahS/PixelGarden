@@ -1,4 +1,5 @@
 #include "SeedManager.hpp"
+#include "f_debug.hpp"
 #include "consts.hpp"
 #include <iostream>
 #include <algorithm>
@@ -41,12 +42,14 @@ void SeedManager::initBaseSeeds()
     std::vector<GrowthSegment> segments;
     segments.push_back(GROW_SOURCE_WEST);
     segments.push_back(GROW_LAST_WEST);
+    segments.push_back(GROW_LAST_WEST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,0,0),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
     
     //the right seed will be blue
     segments.clear();
     segments.push_back(GROW_SOURCE_EAST);
+    segments.push_back(GROW_LAST_EAST);
     segments.push_back(GROW_LAST_EAST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(0,0,200),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
@@ -55,6 +58,7 @@ void SeedManager::initBaseSeeds()
     segments.clear();
     segments.push_back(GROW_SOURCE_NORTH);
     segments.push_back(GROW_LAST_NORTH);
+    segments.push_back(GROW_LAST_NORTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(0,200,0),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
 
@@ -62,29 +66,40 @@ void SeedManager::initBaseSeeds()
     segments.clear();
     segments.push_back(GROW_SOURCE_SOUTH);
     segments.push_back(GROW_LAST_SOUTH);
+    segments.push_back(GROW_LAST_SOUTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,200,200),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
 }
 
-Seed* SeedManager::crossBreed(std::vector<ParentContribution> &contributions)
+Seed* SeedManager::crossBreed(std::vector<ParentContribution*> &contributions)
 {
     std::vector<std::pair<Gene*,bool> > inheritedGenes = std::vector<std::pair<Gene*,bool> >(0);
     
     std::vector<Seed*> baseSeedsChoice = std::vector<Seed*>(0);
+    std::vector<GrowthSegment> growthSegmentChoices = std::vector<GrowthSegment>(0);
+    PixelColor newColor = PixelColor(0,0,0);
     for(int i = 0 ; i < contributions.size() ; i++)
     {
-        for(int c = 0 ; c < contributions[i].contributionValue ; c++)
+        for(int c = 0 ; c < contributions[i]->contributionValue ; c++)
         {
-            baseSeedsChoice.push_back(contributions[i].parent);
+            baseSeedsChoice.push_back(contributions[i]->parent);
+            newColor += contributions[i]->parent->_color;
+            for(int r = 0 ; r < contributions[i]->parent->_segments.size(); r++)
+            {
+                growthSegmentChoices.push_back(contributions[i]->parent->_segments[r]);
+            }
         }
     }
+    debug::print("new color" , newColor);
+    newColor.normalizeTo(displayconsts::NORMALIZED_TARGET_VALUE);
+    debug::print("new color" , newColor);
     // choose base attribute.
     SeedAttribute baseAttribute = baseSeedsChoice[rand() % baseSeedsChoice.size()]->_baseAttributes;
     
     std::vector<bool> geneInherited = std::vector<bool>(_genesManager->getTotalGenes());
     for(int i = 0 ; i < contributions.size() ; i++)
     {
-        Seed* parent = contributions[i].parent;
+        Seed* parent = contributions[i]->parent;
         std::vector<Gene*> genes = parent->_expressedGenes;
         for(int c = 0 ; c < genes.size() ; c++)
         {
@@ -156,10 +171,17 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution> &contributions)
             }
         }
     }
-    //TODO COLOR
-    PixelColor newColor;
+
     std::vector<GrowthSegment> segments;
-    Seed* newSeed = new Seed(_seeds.size(), expressedGenes, unexpressedGenes,newColor,baseAttribute,segments);
+
+    Seed* newSeed = new Seed(_seeds.size(), expressedGenes, unexpressedGenes,newColor,baseAttribute);
+    int growthSegs = newSeed->_effectiveAttributes.growthSegments;
+    std::cout << newColor.r << " " <<  newColor.g << " " << newColor.b << std::endl;
+    for(int i = 0 ; i < growthSegs ; i++)
+    {
+        segments.push_back(growthSegmentChoices[rand() % growthSegmentChoices.size()]);
+    }
+    newSeed->setSegments(segments);
     _seeds.push_back(newSeed);
     _counts.push_back(0);
     return newSeed;

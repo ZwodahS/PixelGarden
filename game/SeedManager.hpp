@@ -17,7 +17,7 @@ class SeedManager
 
         void initBaseSeeds();
 
-        Seed* crossBreed(std::vector<ParentContribution> &contributions);
+        Seed* crossBreed(std::vector<ParentContribution*> &contributions);
 
 
         std::vector<Seed*>::iterator getIterator();

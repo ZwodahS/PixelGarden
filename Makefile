@@ -4,6 +4,7 @@ vpath %.cpp game/
 vpath %.cpp game/seeds
 vpath %.cpp game/garden
 vpath %.cpp game/screens
+vpath %.cpp test/
 vpath %.o obj/
 
 BIN=pixelgarden
@@ -21,13 +22,15 @@ zf_sfmlobjs = $(patsubst %, $(OBJDIR)/%,$(zf_sfml:.cpp=.o))
 game = $(shell cd game; ls *.cpp ; for F in `ls -d */` ; do cd $$F; ls *.cpp ;cd ..; done)
 gameobjs = $(patsubst %,$(OBJDIR)/%,$(game:.cpp=.o))
 
+test = $(shell cd test; ls *.cpp)
+testobjs = $(patsubst %,$(OBJDIR)/%,$(test:.cpp=.o))
 
 
 main=obj/main.o
 
 all: $(BIN)
 
-$(BIN) : $(main) $(commonobjs) $(gameobjs) $(zf_sfmlobjs)
+$(BIN) : $(main) $(commonobjs) $(gameobjs) $(zf_sfmlobjs) $(testobjs)
 	$(CXX) -o $(BIN) $(OBJDIR)/* $(SFML)
 
 $(OBJDIR)/%.o : %.cpp

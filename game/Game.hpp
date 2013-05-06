@@ -3,6 +3,7 @@
 #include "g_screens.hpp"
 #include "GameData.hpp"
 #include "Assets.hpp"
+#include "f_debug.hpp"
 #include "InputControl.hpp"
 #include <SFML/Graphics.hpp>
 

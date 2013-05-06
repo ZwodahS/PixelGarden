@@ -1,4 +1,5 @@
 #include "PixelColor.hpp"
+#include <iostream>
 PixelColor::PixelColor()
 {
     int r = 0;
@@ -42,29 +43,29 @@ PixelColor& PixelColor::normalizeTo(int value)
     {
         if(r > value)
         {
-            float multiplier = 1.0f * (r/value);
+            float multiplier = (1.0f * r)/value;
+            g = (g == r) ? value : (int)(g/multiplier);
+            b = (b == r) ? value : (int)(b/multiplier);
             r = value;
-            g = (int)(g/multiplier);
-            b = (int)(b/multiplier);
         }
     }
     else if(g >= b )
     {
         if(g > value)
         {
-            float multiplier = 1.0f * (g/value);
-            r = (int)(r/multiplier);
+            float multiplier = (1.0f * g)/value;
+            r = (r == g) ? value : (int)(r/multiplier);
+            b = (b == g) ? value : (int)(b/multiplier);
             g = value;
-            b = (int)(b/multiplier);
         }
     }
     else
     {
         if(b > value)
         {
-            float multiplier = 1.0f * (r/value);
-            r = (int)(r/multiplier);
-            g = (int)(g/multiplier);
+            float multiplier = (1.0f * b)/value;
+            r = (r == b) ? value : (int)(r/multiplier);
+            g = (g == b) ? value : (int)(g/multiplier);
             b = value;
         }
     }
