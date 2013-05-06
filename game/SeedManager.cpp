@@ -37,7 +37,7 @@ void SeedManager::initBaseSeeds()
 {
     std::vector<Gene*> expressedGenes = _genesManager->getDefaultExpressedGenes();
     std::vector<Gene*> unexpressedGenes = _genesManager->getDefaultUnexpressedGenes();
-    SeedAttribute seedAttr = SeedAttribute(2,3,3,3,3,20,20);
+    SeedAttribute seedAttr = SeedAttribute(3,3,3,3,3,20,20);
     // the left seed will be red.
     std::vector<GrowthSegment> segments;
     segments.push_back(GROW_SOURCE_WEST);

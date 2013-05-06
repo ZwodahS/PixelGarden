@@ -42,7 +42,7 @@ class SeedSlot  // defines a slot in the seed screen, to draw the seed and the n
         sf::Rect<float> _containBound;
         sf::Sprite _iconSprite;
         sf::Text   _countText;
-        sf::RectangleShape  _border;
+        sf::Sprite  _border;
 };
 
 #endif

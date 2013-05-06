@@ -11,6 +11,8 @@ struct PixelAssets
     TextureRegion NW;
     TextureRegion SE;
     TextureRegion SW;
+    TextureRegion seed;
+    TextureRegion seedSlot;
 };
 
 struct FontAssets
