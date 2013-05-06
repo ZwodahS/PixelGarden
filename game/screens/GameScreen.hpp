@@ -33,8 +33,20 @@ class GameScreen : public Screen
         sf::View _gardenView;
         sf::View _seedView;
         sf::View _hudView;
-
+        
+        Seed* _hud_currentDisplayedSeed;
         sf::Text _hud_seedName;
+        std::vector<sf::Text*> _hud_growthSegText;
+        std::vector<sf::Text*> _hud_growthTurnText;
+        std::vector<sf::Text*> _hud_maturedDurationsText;
+        std::vector<sf::Text*> _hud_decayTurnText;
+        std::vector<sf::Text*> _hud_genesText;
+        std::vector<sf::Text*> _hud_seedMaturedText;
+        std::vector<sf::Text*> _hud_seedDecayText;
+        sf::Text _hud_geneTitle;
+        std::vector<sf::Text*> _hud_geneId;
+
+        void drawHud(sf::RenderWindow* window, sf::Time delta);
 };
 
 #endif

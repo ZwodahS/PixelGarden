@@ -90,9 +90,7 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution*> &contributions)
             }
         }
     }
-    debug::print("new color" , newColor);
     newColor.normalizeTo(displayconsts::NORMALIZED_TARGET_VALUE);
-    debug::print("new color" , newColor);
     // choose base attribute.
     SeedAttribute baseAttribute = baseSeedsChoice[rand() % baseSeedsChoice.size()]->_baseAttributes;
     
@@ -176,7 +174,6 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution*> &contributions)
 
     Seed* newSeed = new Seed(_seeds.size(), expressedGenes, unexpressedGenes,newColor,baseAttribute);
     int growthSegs = newSeed->_effectiveAttributes.growthSegments;
-    std::cout << newColor.r << " " <<  newColor.g << " " << newColor.b << std::endl;
     for(int i = 0 ; i < growthSegs ; i++)
     {
         segments.push_back(growthSegmentChoices[rand() % growthSegmentChoices.size()]);

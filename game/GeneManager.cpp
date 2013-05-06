@@ -31,8 +31,8 @@ std::vector<Gene*> GeneManager::getDefaultExpressedGenes()
     genes.push_back(_genes[12]); // growth turn -1
     genes.push_back(_genes[20]); // matured duration -1
     genes.push_back(_genes[28]); // decay turn -1
-    genes.push_back(_genes[40]); // seed chance -20% (decay)
-    genes.push_back(_genes[41]); // seed chance -20% (matured)
+    genes.push_back(_genes[48]); // seed chance -20% (decay)
+    genes.push_back(_genes[49]); // seed chance -20% (matured)
     return genes;
 }
 

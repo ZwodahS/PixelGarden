@@ -41,9 +41,7 @@ bool Pixel::plantSeed(Seed* seed)
     _seed = seed;
     _maturedSeed = seed;
     this->_accumulatedColor = _seed->_color;
-    debug::print(seed->_color);
     this->_displayedColor = this->_accumulatedColor;
-    debug::print(_displayedColor);
     this->_state = pixelstate::SEED;
     this->_plantState = plantstate::GROWING;
     return true;
@@ -118,7 +116,6 @@ void Pixel::updateDeadTurn(std::vector<Seed*> &newSeeds)
 
 void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
 {
-    std::cout << "updating seed turn : " << _location.row << " " << _location.col << std::endl;
     if(_plantState == plantstate::GROWING)
     {
         // if the size is 0 or if the last pixel is done,
@@ -159,7 +156,6 @@ void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
             // growing state will change to matured when all plants is done.
             if(_leafContributions.back()->seedDone)
             {
-                std::cout << "pixel grown" << std::endl;
                 // if seed is done for this pixel, then check if the total growth segment is reached.
                 if(_leafPixels.size() >= getGrowthSegments())
                 {

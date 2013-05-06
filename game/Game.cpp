@@ -34,6 +34,7 @@ void Game::run()
     gs.initNewGame();
     _currentScreen = &gs; 
     bool quit = false;
+
     while(_window->isOpen())
     {
         sf::Time delta = clock.restart();

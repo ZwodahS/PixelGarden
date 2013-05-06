@@ -21,5 +21,9 @@ Probability::Probability(int chance,int max)
 
 bool Probability::roll()
 {
+    if(chance < 0)
+    {
+        return false;
+    }
     return (rand() % maxRoll < chance);
 }

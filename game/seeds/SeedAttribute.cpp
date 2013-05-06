@@ -31,8 +31,8 @@ SeedAttribute& SeedAttribute::operator+=(const SeedAttribute &rhs)
     this->growthSegments += rhs.growthSegments;
     this->growthTurns    += rhs.growthTurns;
     this->maturedDuration += rhs.maturedDuration;
-    this->decayTurns = rhs.decayTurns;
-    this->maxExpressedTraits = rhs.maxExpressedTraits;
+    this->decayTurns += rhs.decayTurns;
+    this->maxExpressedTraits += rhs.maxExpressedTraits;
     this->decaySeed.chance += rhs.decaySeed.chance;
     this->maturedSeed.chance += rhs.maturedSeed.chance;
     return *this;
@@ -41,7 +41,7 @@ SeedAttribute& SeedAttribute::operator+=(const SeedAttribute &rhs)
 void SeedAttribute::setToMinMax()
 {
     this->growthSegments = growthSegments < 1 ? 1 : this->growthSegments;
-    this->growthTurns = growthTurns < 1 ? 1 : this->growthSegments;
+    this->growthTurns = growthTurns < 1 ? 1 : this->growthTurns;
     this->maturedDuration = maturedDuration < 1 ? 1 : this->maturedDuration;
     this->decayTurns = decayTurns < 1 ? 1 : this->decayTurns;
     this->maxExpressedTraits = maxExpressedTraits < 0 ? 0 : this->maxExpressedTraits;
