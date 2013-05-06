@@ -30,3 +30,27 @@ bool operator!=(const Grid &lhs, const Grid &rhs)
     return !(operator==(lhs,rhs));
 }
 
+
+Grid& Grid::operator+=(const Grid& rhs)
+{
+    this->row += rhs.row;
+    this->col += rhs.col;
+    return *this;
+}
+
+Grid& Grid::operator-=(const Grid& rhs)
+{
+    this->row -= rhs.row;
+    this->col -= rhs.col;
+    return *this;
+}
+
+Grid operator+(Grid lhs, const Grid &rhs)
+{
+    return lhs += rhs;
+}
+
+Grid operator-(Grid lhs, const Grid &rhs)
+{
+    return lhs -= rhs;
+}

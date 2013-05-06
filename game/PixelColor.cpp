@@ -50,7 +50,7 @@ PixelColor& PixelColor::normalizeTo(int value)
     }
     else if(g >= b )
     {
-        if(g < value)
+        if(g > value)
         {
             float multiplier = 1.0f * (g/value);
             r = (int)(r/multiplier);
@@ -60,7 +60,7 @@ PixelColor& PixelColor::normalizeTo(int value)
     }
     else
     {
-        if(b < value)
+        if(b > value)
         {
             float multiplier = 1.0f * (r/value);
             r = (int)(r/multiplier);

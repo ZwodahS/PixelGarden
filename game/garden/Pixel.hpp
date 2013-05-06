@@ -5,14 +5,10 @@
 #include "../PixelColor.hpp"
 #include "../g_seeds.hpp"
 #include "../../zf_common/Grid.hpp"
-
 #include <SFML/Graphics.hpp>
 
 
 #include <vector>
-
-
-
 namespace pixelstate
 {
     enum PixelState
@@ -40,10 +36,11 @@ namespace plantstate
 
 class Game;
 class Garden;
+class SeedManager;
 class Pixel
 {
     public:
-        Pixel(Game* game,Garden* garden,int row ,int col);
+        Pixel(Game* game,Garden* garden,SeedManager* seedM,int row ,int col);
         ~Pixel();
 
         pixelstate::PixelState getState();
@@ -62,13 +59,18 @@ class Pixel
     
         void update(sf::Time &delta);
         void draw(sf::RenderWindow* window, sf::Time &delta);
+        Pixel* findNextPixelToGrow();
+
+        bool canPlant(Seed* seed);
+        bool hasParentSeed(Seed* seed);
+        Grid _location;
     protected:
         Game* _game;
         Garden* _garden;
-        Grid _location;
+        SeedManager* _seedM;
         pixelstate::PixelState _state;
-        PixelColor _color; // the color of this pixel.
         PixelColor _displayedColor;
+        PixelColor _accumulatedColor; // this is the accumulated color, which is different from the actual color.
         int _currentStateDuration; // for counting how long the plant has been in it's current state.
 
     /// DRAW STUFFS ///
@@ -80,17 +82,16 @@ class Pixel
         std::vector<Pixel*> _leafPixels; // the pixel that this seeds has grown into.
         std::vector<ParentContribution*> _leafContributions;
         plantstate::PlantState _plantState; 
-        PixelColor _accumulatedColor; // this is the accumulated color, which is different from the actual color.
 
     ////// growing state. ///////
-        std::vector<ParentContribution> _parentsContributions; // stores the parent's contribution.
+        std::vector<ParentContribution*> _parentsContributions; // stores the parent's contribution.
     ////// matured state / decay state //////
         Seed* _maturedSeed; // for the storing the matured seed. This will be the same as the parent if there is no cross breeding.
             /* used when 2 of the same seed grows into the same spot or when another plant "boost" this pixel. 
              * This allow the player to increase the chance of seed. */
         int seedBonus; 
         bool mutated;
-
+        void setPlantMatured();
         void changeState(pixelstate::PixelState state);
         
         void clearSeedState();

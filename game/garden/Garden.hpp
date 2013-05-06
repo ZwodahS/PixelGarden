@@ -11,10 +11,11 @@ class Pixel;
 class GardenEvent;
 class Game;
 class GardenSelector;
+class SeedManager;
 class Garden
 {
     public:
-        Garden(Game* game);
+        Garden(Game* game,SeedManager* seedM);
         ~Garden();
 
         bool inRange(int row , int col);

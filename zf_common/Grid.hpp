@@ -16,10 +16,16 @@ struct Grid
         g.row = y / (gridSize + gridSpacing);
         return g;
     }
+
+    Grid& operator+=(const Grid &rhs);
+    Grid& operator-=(const Grid &rhs);
+
+
 };
 
 bool operator==(const Grid &lhs, const Grid &rhs);
 bool operator!=(const Grid &lhs, const Grid &rhs);
-
+Grid operator-(Grid lhs, const Grid& rhs);
+Grid operator+(Grid lhs, const Grid& rhs);
 
 #endif

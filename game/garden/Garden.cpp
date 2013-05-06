@@ -2,12 +2,12 @@
 #include "Pixel.hpp"
 #include "GardenEvent.hpp"
 #include "GardenSelector.hpp"
-
+#include "../SeedManager.hpp"
 #include "../consts.hpp"
 #include "../Game.hpp"
 
 
-Garden::Garden(Game* game)
+Garden::Garden(Game* game, SeedManager* seedM)
 {
     _pixels = std::vector<std::vector<Pixel*> >(gameconsts::MAX_GARDEN_ROW,std::vector<Pixel*>(gameconsts::MAX_GARDEN_COL));
     this->_game = game;
@@ -15,7 +15,7 @@ Garden::Garden(Game* game)
     {
         for(int c = 0 ; c < _pixels.size() ; c++)
         {
-            _pixels[r][c] = new Pixel(game,this,r,c);
+            _pixels[r][c] = new Pixel(game,this,seedM,r,c);
         }
     }
     selector = new GardenSelector(game,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SIZE,3,-1,5);
@@ -60,6 +60,7 @@ Pixel* Garden::pixelAt(int row, int col)
     }
     return _pixels[row][col];
 }
+
 
 std::vector<GardenEvent*> Garden::doOneTurn()
 {

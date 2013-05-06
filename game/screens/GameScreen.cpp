@@ -80,14 +80,19 @@ void GameScreen::update(sf::RenderWindow* window, sf::Time delta)
         else
         {
             window->setView(_gardenView);
-            if(_data->selectedSeed != 0)
+            if(_game->_mouse->_left.thisReleased)
             {
-                if(_game->_mouse->_left.thisReleased)
+                if(_data->selectedSeed != 0)
                 {
                     sf::Vector2f mousePos = _game->_mouse->getWorldPosition(*window);
                     Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
                     _data->garden->plantSeed(_data->selectedSeed, selectedGrid);
                 }
+            }
+            else if(_game->_keyInput->processOneTurn.thisReleased)
+            {
+                _data->garden->doOneTurn();
+                std::cout << "do turn" << std::endl;
             }
         }
     }
@@ -98,7 +103,7 @@ void GameScreen::initNewGame()
     GeneManager* geneManager = new GeneManager();
     geneManager->initBasicRules();
     SeedManager* seedManager = new SeedManager(geneManager);
-    Garden* garden = new Garden(_game);
+    Garden* garden = new Garden(_game,seedManager);
     _data = new GameData(seedManager,geneManager,garden);
 }
 

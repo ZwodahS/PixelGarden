@@ -1,17 +1,19 @@
 #include "Pixel.hpp"
+#include "../SeedManager.hpp"
 #include "../g_seeds.hpp"
 #include "../Game.hpp"
 #include "../consts.hpp"
 
 
-Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
+Pixel::Pixel(Game* game,Garden* garden,SeedManager* seedM,int row ,int col)
 {
     this->_game = game;
     this->_garden = garden;
+    this->_seedM = seedM;
     this->_state = pixelstate::DEAD;
     this->_location = Grid(row,col);
-    this->_color = PixelColor(0,0,0);
-    this->_displayedColor = PixelColor(20,20,20);
+    this->_accumulatedColor = PixelColor(0,0,0);
+    this->_displayedColor = PixelColor(0,0,0);
     clearSeedState();
     clearGrowingState();
     clearMaturedState();
@@ -23,6 +25,10 @@ Pixel::Pixel(Game* game,Garden* garden,int row ,int col)
 }
 Pixel::~Pixel()
 {
+    for(int i = 0 ; i < _parentsContributions.size() ; i++)
+    {
+        delete _parentsContributions[i];
+    }
 }
 
 
@@ -34,8 +40,10 @@ bool Pixel::plantSeed(Seed* seed)
     }
     _seed = seed;
     _maturedSeed = seed;
-    this->_color = _seed->_color;
-    this->_displayedColor = _color;
+    this->_accumulatedColor = _seed->_color;
+    this->_displayedColor = this->_accumulatedColor;
+    this->_state = pixelstate::SEED;
+    this->_plantState = plantstate::GROWING;
     return true;
 }
 
@@ -55,11 +63,16 @@ void Pixel::clearSeedState()
     this->_plantState = plantstate::NA;
     this->_currentStateDuration = 0;
     this->_accumulatedColor = PixelColor(0,0,0);
+    this->_displayedColor = PixelColor(0,0,0);
 }
 
 void Pixel::clearGrowingState()
 {
-    this->_parentsContributions = std::vector<ParentContribution >(0);
+    for(int i = 0 ; i < _parentsContributions.size(); i++)
+    {
+        delete _parentsContributions[i];
+    }
+    this->_parentsContributions = std::vector<ParentContribution*>(0);
 }
 
 void Pixel::clearMaturedState()
@@ -103,6 +116,7 @@ void Pixel::updateDeadTurn(std::vector<Seed*> &newSeeds)
 
 void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
 {
+    std::cout << "updating seed turn : " << _location.row << " " << _location.col << std::endl;
     if(_plantState == plantstate::GROWING)
     {
         // if the size is 0 or if the last pixel is done,
@@ -111,8 +125,27 @@ void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
         {
             // find a new spot to grow into.
             // if can't find, then this plant is matured.
+            Pixel* target =  findNextPixelToGrow();
+            if(target == 0)
+            {
+                setPlantMatured();
+            }
+            else
+            {
+                ParentContribution* pg = target->beginGrowth(_seed);
+                if(pg == 0)
+                {
+                    setPlantMatured();
+                }
+                else
+                {
+                    _leafPixels.push_back(target);
+                    _leafContributions.push_back(pg);
+                }
+            }
         }
-        else 
+
+        if(_plantState != plantstate::MATURED) // make sure some leaf is found.
         {
             _leafContributions[_leafContributions.size() - 1]->contributionValue++;
             if(_leafContributions[_leafContributions.size() -1]->contributionValue >= getSeedGrowthTurn())
@@ -124,16 +157,11 @@ void Pixel::updateSeedTurn(std::vector<Seed*> &newSeeds)
             // growing state will change to matured when all plants is done.
             if(_leafContributions.back()->seedDone)
             {
+                std::cout << "pixel grown" << std::endl;
                 // if seed is done for this pixel, then check if the total growth segment is reached.
                 if(_leafPixels.size() >= getGrowthSegments())
                 {
-                    // done.
-                    for(int i = 0 ; i < _leafContributions.size() ; i++)
-                    {
-                        _leafContributions[i]->parentDone = true;
-                    }
-                    this->_plantState == plantstate::MATURED; // mark this plant as matured.
-                    this->_currentStateDuration = 0 ;
+                    setPlantMatured();
                 }
             }
         }
@@ -234,17 +262,17 @@ void Pixel::updateGrowingState(std::vector<Seed*> &newSeeds)
 {
     bool matured = true;
     bool hasDifferent = false;
-    Seed* seed = _parentsContributions.size() > 0 ? _parentsContributions[0].parent : 0;
+    Seed* seed = _parentsContributions.size() > 0 ? _parentsContributions[0]->parent : 0;
     // checks. if not matured then do nothing else.
     for(int i = 0 ; i < _parentsContributions.size() ; i++)
     {
         // if there is a parent still contributing to the pixel then do nothing.
-        if(!(_parentsContributions[i].seedDone))
+        if(!(_parentsContributions[i]->seedDone))
         {
             matured = false;
             break;
         }
-        if(!hasDifferent && seed->_id != _parentsContributions[i].parent->_id)
+        if(!hasDifferent && seed->_id != _parentsContributions[i]->parent->_id)
         {
             hasDifferent = true;
         }
@@ -280,7 +308,7 @@ void Pixel::updateMaturedWaitingState(std::vector<Seed*> &newSeeds)
     for(int i = 0 ; i < _parentsContributions.size(); i++)
     {
         // if there is a parent that is not matured.
-        if(!(_parentsContributions[i].parentDone))
+        if(!(_parentsContributions[i]->parentDone))
         {
             allParentMatured = false;
             break;
@@ -310,7 +338,7 @@ void Pixel::updateDecayingState(std::vector<Seed*> &newSeeds)
 
 Seed* Pixel::crossBreed()
 {
-    return 0;
+    
 }
 
 
@@ -335,20 +363,32 @@ void Pixel::changeState(pixelstate::PixelState state)
     _currentStateDuration = 0;
 }
 
+void Pixel::setPlantMatured()
+{
+    this->_plantState = plantstate::MATURED;
+    this->_currentStateDuration = 0;
+    for(int i = 0 ; i < _leafContributions.size() ; i++)
+    {
+        _leafContributions[i]->parentDone = true;
+    }
+}
+
 ParentContribution* Pixel::beginGrowth(Seed* seed)
 {
-    if(_state != pixelstate::DEAD || _state != pixelstate::GROWING)
+    if(_state != pixelstate::DEAD && _state != pixelstate::GROWING)
     {
         return 0;
     }
-    _parentsContributions.push_back(ParentContribution(seed));
+    ParentContribution* pc = new ParentContribution(seed);
+    _parentsContributions.push_back(pc);
     _state = pixelstate::GROWING;
+    return pc;
 }
 
 void Pixel::contributeColor(PixelColor color)
 {
-    this->_color += color;
-    this->_displayedColor = _color;
+    this->_accumulatedColor += color;
+    this->_displayedColor = _accumulatedColor;
     this->_displayedColor.normalizeTo(displayconsts::NORMALIZED_TARGET_VALUE);
 }
 
@@ -359,6 +399,230 @@ void Pixel::update(sf::Time &delta)
 
 void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
 {
-    _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,255));
+    if(_state == pixelstate::DEAD)
+    {
+        _mainPixel.setColor(sf::Color(20,20,20,255));
+    }
+    else
+    {
+        _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,255));
+    }
     window->draw(_mainPixel);
+}
+
+bool Pixel::canPlant(Seed* seed)
+{
+    if(_state == pixelstate::DEAD || _state == pixelstate::GROWING)
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
+}
+
+bool Pixel::hasParentSeed(Seed* seed)
+{
+    for(int i = 0 ; i < _parentsContributions.size() ; i++)
+    {
+        if(_parentsContributions[i]->parent == seed) // memory address test ? should/must be the same.
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+Pixel* Pixel::findNextPixelToGrow()
+{
+    if(_seed == 0)
+    {
+        return 0;
+    }
+    if(_seed->_segments.size() <= _leafPixels.size())
+    {
+        return 0;
+    }
+    GrowthSegment gs = _seed->_segments[_leafPixels.size()];
+    Pixel* targetPixel = 0;
+    Grid next;
+    Grid direction;
+    Pixel* temp = 0;
+    switch(gs)
+    {
+        case GROW_SOURCE_NORTH:
+            direction = Grid(-1,0);
+            next = _location + direction;
+            while(targetPixel == 0)
+            {
+                temp = _garden->pixelAt(next.row, next.col); 
+                if(temp == 0)
+                {
+                    break; // the north is out of range.
+                }
+                if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+                {
+                    targetPixel = temp;
+                    break;
+                }
+                else if(temp->hasParentSeed(_seed)) // if next pixel is matured, check if it is our own. if it is , search above it
+                {
+                    next += direction;
+                }
+                else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+                {
+                    break;
+                }
+            }
+            break;
+        case GROW_SOURCE_SOUTH:
+            direction = Grid(1,0);
+            next = _location + direction;
+            while(targetPixel == 0)
+            {
+                temp = _garden->pixelAt(next.row, next.col); 
+                if(temp == 0)
+                {
+                    break; // the north is out of range.
+                }
+                if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+                {
+                    targetPixel = temp;
+                    break;
+                }
+                else if(temp->hasParentSeed(_seed)) // if next pixel is matured, check if it is our own. if it is , search above it
+                {
+                    next += direction;
+                }
+                else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+                {
+                    break;
+                }
+            }
+            break;
+        case GROW_SOURCE_EAST:
+            direction = Grid(0,1);
+            next = _location + direction;
+            while(targetPixel == 0)
+            {
+                temp = _garden->pixelAt(next.row, next.col); 
+                if(temp == 0)
+                {
+                    break; // the north is out of range.
+                }
+                if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+                {
+                    targetPixel = temp;
+                    break;
+                }
+                else if(temp->hasParentSeed(_seed)) // if next pixel is matured, check if it is our own. if it is , search above it
+                {
+                    next += direction;
+                }
+                else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+                {
+                    break;
+                }
+            }
+            break;
+        case GROW_SOURCE_WEST:
+            direction = Grid(0,-1);
+            next = _location + direction;
+            while(targetPixel == 0)
+            {
+                temp = _garden->pixelAt(next.row, next.col); 
+                if(temp == 0)
+                {
+                    break; // out of range
+                }
+                if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+                {
+                    targetPixel = temp;
+                    break;
+                }
+                else if(temp->hasParentSeed(_seed)) // if next pixel is matured, check if it is our own. if it is , search above it
+                {
+                    next += direction;
+                }
+                else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+                {
+                    break;
+                }
+            }
+            break;
+        case GROW_LAST_NORTH:
+            direction = Grid(-1,0);
+            next = (_leafPixels.size() == 0 ? _location : _leafPixels.back()->_location) + direction;
+            temp = _garden->pixelAt(next.row, next.col);
+            if(temp == 0)
+            {
+                break; // out of range.
+            }
+            if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+            {
+                targetPixel = temp;
+                break;
+            }
+            else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+            {
+                break;
+            }
+            break;
+        case GROW_LAST_SOUTH:
+            direction = Grid(1,0);
+            next = (_leafPixels.size() == 0 ? _location : _leafPixels.back()->_location) + direction;
+            temp = _garden->pixelAt(next.row, next.col);
+            if(temp == 0)
+            {
+                break; // out of range.
+            }
+            if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+            {
+                targetPixel = temp;
+                break;
+            }
+            else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+            {
+                break;
+            }
+            break;
+        case GROW_LAST_EAST:
+            direction = Grid(0,1);
+            next = (_leafPixels.size() == 0 ? _location : _leafPixels.back()->_location) + direction;
+            temp = _garden->pixelAt(next.row, next.col);
+            if(temp == 0)
+            {
+                break; // out of range.
+            }
+            if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+            {
+                targetPixel = temp;
+                break;
+            }
+            else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+            {
+                break;
+            }
+            break;
+        case GROW_LAST_WEST:
+            direction = Grid(0,-1);
+            next = (_leafPixels.size() == 0 ? _location : _leafPixels.back()->_location) + direction;
+            temp = _garden->pixelAt(next.row, next.col);
+            if(temp == 0)
+            {
+                break; // out of range.
+            }
+            if(temp->canPlant(_seed)) // if cannot plant , means that the pixel has matured.
+            {
+                targetPixel = temp;
+                break;
+            }
+            else // next pixel is a matured pixel but is not our own. then we can't grow any more.
+            {
+                break;
+            }
+            break;
+    }
+    return targetPixel;
 }
