@@ -51,6 +51,38 @@ void Game::initAssets()
 
     _assets.pixel.seedSlot = TextureRegion(region.texture,sf::IntRect(srcClip.left,srcClip.top,48,48));
 
+
+    // growth segments
+    group.create(64,64,sf::Color(0,0,0,0));
+    image.loadFromFile("assets/img/segments/last_east.png");
+    group.copy(image,0,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/last_south.png");
+    group.copy(image,16,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/last_west.png");
+    group.copy(image,32,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/last_north.png");
+    group.copy(image,48,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/source_east.png");
+    group.copy(image,0,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/source_south.png");
+    group.copy(image,16,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/source_west.png");
+    group.copy(image,32,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/segments/source_north.png");
+    group.copy(image,48,16,sf::IntRect(0,0,0,0),true);
+
+    region = _assets.pixel.spriteSheet.createRegion(group);
+    srcClip = region.srcClip;
+
+    _assets.pixel.segments.lastEast    = TextureRegion(region.texture,sf::IntRect(srcClip.left,srcClip.top,16,16));
+    _assets.pixel.segments.lastSouth   = TextureRegion(region.texture,sf::IntRect(srcClip.left+16,srcClip.top,16,16));
+    _assets.pixel.segments.lastWest    = TextureRegion(region.texture,sf::IntRect(srcClip.left+32,srcClip.top,16,16));
+    _assets.pixel.segments.lastNorth   = TextureRegion(region.texture,sf::IntRect(srcClip.left+48,srcClip.top,16,16));
+    _assets.pixel.segments.sourceEast  = TextureRegion(region.texture,sf::IntRect(srcClip.left,srcClip.top+16,16,16));
+    _assets.pixel.segments.sourceSouth = TextureRegion(region.texture,sf::IntRect(srcClip.left+16,srcClip.top+16,16,16));
+    _assets.pixel.segments.sourceWest  = TextureRegion(region.texture,sf::IntRect(srcClip.left+32,srcClip.top+16,16,16));
+    _assets.pixel.segments.sourceNorth = TextureRegion(region.texture,sf::IntRect(srcClip.left+48,srcClip.top+16,16,16));
+    
     // load fonts
     _assets.fonts.upheav.loadFromFile("assets/fonts/upheavtt.ttf");
 }

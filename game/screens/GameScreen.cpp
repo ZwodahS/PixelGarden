@@ -8,6 +8,8 @@
 #define FIRST_OFF 180
 #define SECOND_OFF 220
 #define THIRD_OFF 260
+
+#define GROWTH_SEG_ROW_ONE 200
 GameScreen::GameScreen(Game* game)
     :Screen(game)
 {
@@ -104,6 +106,9 @@ GameScreen::GameScreen(Game* game)
 
     this->_hud_geneTitle = sf::Text("Gene List",_game->_assets.fonts.upheav,16);
     this->_hud_geneId = std::vector<sf::Text*>(0);
+
+
+    this->_hud_growthSegments = std::vector<sf::Sprite>(0);
 }
 
 GameScreen::~GameScreen()
@@ -168,6 +173,13 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
             this->_hud_seedDecayText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.decaySeed.chance));
             this->_hud_seedDecayText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.decaySeed.chance));
             this->_hud_seedDecayText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.decaySeed.chance));
+        
+            this->_hud_growthSegments = std::vector<sf::Sprite>(0);
+            for(int i = 0 ; i < _hud_currentDisplayedSeed->_segments.size(); i++)
+            {
+                _hud_growthSegments.push_back(_game->createSprite(_hud_currentDisplayedSeed->_segments[i]));
+                _hud_growthSegments[i].setPosition(HUD_LEFT + (i * 18), GROWTH_SEG_ROW_ONE);
+            }
         }
         else
         {
@@ -246,6 +258,10 @@ void GameScreen::drawHud(sf::RenderWindow* window, sf::Time delta)
         for(int i = 0 ; i < _hud_growthSegText.size() ; i++)
         {
             window->draw(*_hud_growthSegText[i]);
+        }
+        for(int i = 0 ; i < _hud_growthSegments.size() ; i++)
+        {
+            window->draw(_hud_growthSegments[i]);
         }
     } 
 }

@@ -2,6 +2,17 @@
 #define _GAME_ASSETS_H_
 #include "../zf_sfml/SpriteSheet.hpp"
 
+struct SegmentAssets
+{
+    TextureRegion sourceNorth;
+    TextureRegion sourceSouth;
+    TextureRegion sourceEast;
+    TextureRegion sourceWest;
+    TextureRegion lastNorth;
+    TextureRegion lastSouth;
+    TextureRegion lastEast;
+    TextureRegion lastWest;
+};
 
 struct PixelAssets
 {
@@ -13,6 +24,8 @@ struct PixelAssets
     TextureRegion SW;
     TextureRegion seed;
     TextureRegion seedSlot;
+    
+    SegmentAssets segments;
 };
 
 struct FontAssets

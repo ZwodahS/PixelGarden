@@ -16,4 +16,5 @@ enum GrowthSegment
 
 
 std::string toString(GrowthSegment gs);
+
 #endif

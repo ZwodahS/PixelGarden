@@ -76,3 +76,43 @@ void Game::draw(sf::Time delta)
     _window->display();
 }
 
+sf::Sprite Game::createSprite(GrowthSegment gs)
+{
+    if(gs == GROW_SOURCE_NORTH)
+    {
+        return _assets.pixel.segments.sourceNorth.createSprite();
+    }
+    else if(gs == GROW_SOURCE_SOUTH)
+    {
+        return _assets.pixel.segments.sourceSouth.createSprite();
+    }
+    else if(gs == GROW_SOURCE_EAST)
+    {
+        return _assets.pixel.segments.sourceEast.createSprite();
+    }
+    else if(gs == GROW_SOURCE_WEST)
+    {
+        return _assets.pixel.segments.sourceWest.createSprite();
+    }
+    else if(gs == GROW_LAST_NORTH)
+    {
+        return _assets.pixel.segments.lastNorth.createSprite();
+    }
+    else if(gs == GROW_LAST_SOUTH)
+    {
+        return _assets.pixel.segments.lastSouth.createSprite();
+    }
+    else if(gs == GROW_LAST_EAST)
+    {
+        return _assets.pixel.segments.lastEast.createSprite();
+    }
+    else if(gs == GROW_LAST_WEST)
+    {
+        return _assets.pixel.segments.lastWest.createSprite();
+    }
+    else 
+    {
+        // shouldn't happen but just put it here.
+        return _assets.pixel.segments.sourceNorth.createSprite();
+    }
+}

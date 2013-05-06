@@ -45,6 +45,8 @@ class GameScreen : public Screen
         std::vector<sf::Text*> _hud_seedDecayText;
         sf::Text _hud_geneTitle;
         std::vector<sf::Text*> _hud_geneId;
+    
+        std::vector<sf::Sprite> _hud_growthSegments;
 
         void drawHud(sf::RenderWindow* window, sf::Time delta);
 };
