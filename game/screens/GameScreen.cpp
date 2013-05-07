@@ -10,6 +10,10 @@
 #define THIRD_OFF 260
 
 #define GROWTH_SEG_ROW_ONE 200
+
+#define HELP_TEXT_HUD 500
+#define HELP_TEXT_SPACING 20
+
 GameScreen::GameScreen(Game* game)
     :Screen(game)
 {
@@ -33,7 +37,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_growthSegText[0]->setString("Segments");
     this->_hud_growthSegText[0]->setPosition(HUD_LEFT,50);
     this->_hud_growthSegText[1]->setPosition(HUD_LEFT+FIRST_OFF,50);
+    this->_hud_growthSegText[1]->setColor(sf::Color::Blue);
     this->_hud_growthSegText[2]->setPosition(HUD_LEFT+SECOND_OFF,50);
+    this->_hud_growthSegText[2]->setColor(sf::Color::Green);
     this->_hud_growthSegText[3]->setPosition(HUD_LEFT+THIRD_OFF,50);
 
     this->_hud_growthTurnText = std::vector<sf::Text*>(0);
@@ -44,7 +50,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_growthTurnText[0]->setString("Growth Duration");
     this->_hud_growthTurnText[0]->setPosition(HUD_LEFT,70);
     this->_hud_growthTurnText[1]->setPosition(HUD_LEFT+FIRST_OFF,70);
+    this->_hud_growthTurnText[1]->setColor(sf::Color::Blue);
     this->_hud_growthTurnText[2]->setPosition(HUD_LEFT+SECOND_OFF,70);
+    this->_hud_growthTurnText[2]->setColor(sf::Color::Green);
     this->_hud_growthTurnText[3]->setPosition(HUD_LEFT+THIRD_OFF,70);
 
     this->_hud_maturedDurationsText = std::vector<sf::Text*>(0);
@@ -55,7 +63,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_maturedDurationsText[0]->setString("Maturity Duration");
     this->_hud_maturedDurationsText[0]->setPosition(HUD_LEFT,90);
     this->_hud_maturedDurationsText[1]->setPosition(HUD_LEFT+FIRST_OFF,90);
+    this->_hud_maturedDurationsText[1]->setColor(sf::Color::Blue);
     this->_hud_maturedDurationsText[2]->setPosition(HUD_LEFT+SECOND_OFF,90);
+    this->_hud_maturedDurationsText[2]->setColor(sf::Color::Green);
     this->_hud_maturedDurationsText[3]->setPosition(HUD_LEFT+THIRD_OFF,90);
 
     this->_hud_decayTurnText = std::vector<sf::Text*>(0);
@@ -66,7 +76,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_decayTurnText[0]->setString("Decay Duration");
     this->_hud_decayTurnText[0]->setPosition(HUD_LEFT,110);
     this->_hud_decayTurnText[1]->setPosition(HUD_LEFT+FIRST_OFF,110);
+    this->_hud_decayTurnText[1]->setColor(sf::Color::Blue);
     this->_hud_decayTurnText[2]->setPosition(HUD_LEFT+SECOND_OFF,110);
+    this->_hud_decayTurnText[2]->setColor(sf::Color::Green);
     this->_hud_decayTurnText[3]->setPosition(HUD_LEFT+THIRD_OFF,110);
 
     this->_hud_genesText = std::vector<sf::Text*>(0);
@@ -77,7 +89,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_genesText[0]->setString("Maximum Genes");
     this->_hud_genesText[0]->setPosition(HUD_LEFT,130);
     this->_hud_genesText[1]->setPosition(HUD_LEFT+FIRST_OFF,130);
+    this->_hud_genesText[1]->setColor(sf::Color::Blue);
     this->_hud_genesText[2]->setPosition(HUD_LEFT+SECOND_OFF,130);
+    this->_hud_genesText[2]->setColor(sf::Color::Green);
     this->_hud_genesText[3]->setPosition(HUD_LEFT+THIRD_OFF,130);
 
     this->_hud_seedMaturedText = std::vector<sf::Text*>(0);
@@ -88,7 +102,9 @@ GameScreen::GameScreen(Game* game)
     this->_hud_seedMaturedText[0]->setString("Maturity Seed(%)");
     this->_hud_seedMaturedText[0]->setPosition(HUD_LEFT,150);
     this->_hud_seedMaturedText[1]->setPosition(HUD_LEFT+FIRST_OFF,150);
+    this->_hud_seedMaturedText[1]->setColor(sf::Color::Blue);
     this->_hud_seedMaturedText[2]->setPosition(HUD_LEFT+SECOND_OFF,150);
+    this->_hud_seedMaturedText[2]->setColor(sf::Color::Green);
     this->_hud_seedMaturedText[3]->setPosition(HUD_LEFT+THIRD_OFF,150);
 
     this->_hud_seedDecayText = std::vector<sf::Text*>(0);
@@ -99,14 +115,54 @@ GameScreen::GameScreen(Game* game)
     this->_hud_seedDecayText[0]->setString("Decay Seed(%)");
     this->_hud_seedDecayText[0]->setPosition(HUD_LEFT,170);
     this->_hud_seedDecayText[1]->setPosition(HUD_LEFT+FIRST_OFF,170);
+    this->_hud_seedDecayText[1]->setColor(sf::Color::Blue);
     this->_hud_seedDecayText[2]->setPosition(HUD_LEFT+SECOND_OFF,170);
+    this->_hud_seedDecayText[2]->setColor(sf::Color::Green);
     this->_hud_seedDecayText[3]->setPosition(HUD_LEFT+THIRD_OFF,170);
+
+    this->_hud_color = std::vector<sf::Text*>(0);
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        _hud_color.push_back(new sf::Text(" ",_game->_assets.fonts.upheav,16));
+    }
+    this->_hud_color[0]->setString("Color(R,G,B)");
+    this->_hud_color[0]->setPosition(HUD_LEFT,170);
+    this->_hud_color[1]->setPosition(HUD_LEFT+FIRST_OFF,170);
+    this->_hud_color[1]->setColor(sf::Color::Red);
+    this->_hud_color[2]->setPosition(HUD_LEFT+SECOND_OFF,170);
+    this->_hud_color[2]->setColor(sf::Color::Green);
+    this->_hud_color[3]->setPosition(HUD_LEFT+THIRD_OFF,170);
+    this->_hud_color[3]->setColor(sf::Color::Blue);
 
     this->_hud_geneTitle = sf::Text("Gene List",_game->_assets.fonts.upheav,16);
     this->_hud_geneId = std::vector<sf::Text*>(0);
 
 
     this->_hud_growthSegments = std::vector<sf::Sprite>(0);
+    
+    this->_hud_helpTexts = std::vector<sf::Text*>(0);
+    sf::Text* invText = new sf::Text("<I> to open the list of seeds",_game->_assets.fonts.upheav,16);
+    sf::Text* spaceText = new sf::Text("<Space> to advance the garden",_game->_assets.fonts.upheav,16);
+    sf::Text* space2    = new sf::Text("        by 1 turn",_game->_assets.fonts.upheav,16);
+    sf::Text* baseText = new sf::Text("Blue is base stats",_game->_assets.fonts.upheav,16);
+    baseText->setColor(sf::Color::Blue);
+    sf::Text* bonus = new sf::Text("Green is bonus stats from",_game->_assets.fonts.upheav,16);
+    bonus->setColor(sf::Color::Green);
+    sf::Text* bonus2 = new sf::Text("  expressed Genes",_game->_assets.fonts.upheav,16);
+    bonus2->setColor(sf::Color::Green);
+    sf::Text* final = new sf::Text("White is final stats",_game->_assets.fonts.upheav,16);
+    final->setColor(sf::Color::Red);
+    this->_hud_helpTexts.push_back(baseText);
+    this->_hud_helpTexts.push_back(bonus);
+    this->_hud_helpTexts.push_back(bonus2);
+    this->_hud_helpTexts.push_back(final);
+    this->_hud_helpTexts.push_back(invText);
+    this->_hud_helpTexts.push_back(spaceText);
+    this->_hud_helpTexts.push_back(space2);
+    for(int i = 0 ; i < _hud_helpTexts.size() ; i++)
+    {
+        _hud_helpTexts[i]->setPosition(HUD_LEFT,HELP_TEXT_HUD+(i*HELP_TEXT_SPACING));
+    }
 }
 
 GameScreen::~GameScreen()
@@ -118,6 +174,46 @@ GameScreen::~GameScreen()
     if(_seedScreen != 0)
     {
         delete _seedScreen;
+    }
+    for(int i = 0 ; i < _hud_growthSegText.size(); i++)
+    {
+        delete _hud_growthSegText[i];
+    }
+    for(int i = 0 ; i < _hud_growthTurnText.size(); i++)
+    {
+        delete _hud_growthTurnText[i];
+    }
+    for(int i = 0 ; i < _hud_maturedDurationsText.size(); i++)
+    {
+        delete _hud_maturedDurationsText[i];
+    }
+    for(int i = 0 ; i < _hud_decayTurnText.size(); i++)
+    {
+        delete _hud_decayTurnText[i];
+    }
+    for(int i = 0 ; i < _hud_genesText.size(); i++)
+    {
+        delete _hud_genesText[i];
+    }
+    for(int i = 0 ; i < _hud_seedMaturedText.size(); i++)
+    {
+        delete _hud_seedMaturedText[i];
+    }
+    for(int i = 0 ; i < _hud_seedDecayText.size(); i++)
+    {
+        delete _hud_seedDecayText[i];
+    }
+    for(int i = 0 ; i < _hud_geneId.size(); i++)
+    {
+        delete _hud_geneId[i];
+    }
+    for(int i = 0 ; i < _hud_helpTexts.size(); i++)
+    {
+        delete _hud_helpTexts[i];
+    }
+    for(int i = 0 ; i < _hud_color.size() ; i++)
+    {
+        delete _hud_color[i];
     }
 }
 
@@ -170,7 +266,10 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
             this->_hud_seedDecayText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.decaySeed.chance));
             this->_hud_seedDecayText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.decaySeed.chance));
             this->_hud_seedDecayText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.decaySeed.chance));
-        
+            
+            this->_hud_color[1]->setString(zf::toString(_hud_currentDisplayedSeed->_color.r));
+            this->_hud_color[2]->setString(zf::toString(_hud_currentDisplayedSeed->_color.g));
+            this->_hud_color[3]->setString(zf::toString(_hud_currentDisplayedSeed->_color.b));
             this->_hud_growthSegments = std::vector<sf::Sprite>(0);
             for(int i = 0 ; i < _hud_currentDisplayedSeed->_segments.size(); i++)
             {
@@ -228,6 +327,10 @@ void GameScreen::drawHud(sf::RenderWindow* window, sf::Time delta)
     window->draw(_hud_seedName);
     if(_hud_currentDisplayedSeed != 0)
     {
+        for(int i = 0 ; i < _hud_color.size() ; i++)
+        {
+            window->draw(*_hud_color[i]);
+        }
         //for(int i = 0 ; i < _hud_seedDecayText.size() ; i++)
         //{
         //    window->draw(*_hud_seedDecayText[i]);
@@ -261,6 +364,11 @@ void GameScreen::drawHud(sf::RenderWindow* window, sf::Time delta)
             window->draw(_hud_growthSegments[i]);
         }
     } 
+
+    for(int i = 0 ; i < _hud_helpTexts.size() ; i++)
+    {
+        window->draw(*_hud_helpTexts[i]);
+    }
 }
 
 void GameScreen::initNewGame()
