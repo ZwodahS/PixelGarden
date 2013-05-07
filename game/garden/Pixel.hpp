@@ -64,6 +64,8 @@ class Pixel
         bool canPlant(Seed* seed);
         bool hasParentSeed(Seed* seed);
         Grid _location;
+
+        Seed* getParentSeed();
     protected:
         Game* _game;
         Garden* _garden;

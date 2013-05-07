@@ -31,7 +31,10 @@ Pixel::~Pixel()
     }
 }
 
-
+Seed* Pixel::getParentSeed()
+{
+    return _seed;
+}
 bool Pixel::plantSeed(Seed* seed)
 {
     if(this->_state != pixelstate::DEAD)

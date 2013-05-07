@@ -33,7 +33,8 @@ class GameScreen : public Screen
         sf::View _gardenView;
         sf::View _seedView;
         sf::View _hudView;
-        
+    
+        Seed* _hoverSeed;        
         Seed* _hud_currentDisplayedSeed;
         sf::Text _hud_seedName;
         std::vector<sf::Text*> _hud_growthSegText;
@@ -54,6 +55,9 @@ class GameScreen : public Screen
         sf::Text _hud_pgs;
         std::vector<sf::Text*> _hud_helpTexts;
         PGS* pgs;
+
+        void setDisplayedSeed(Seed* seed);
+
 };
 
 #endif

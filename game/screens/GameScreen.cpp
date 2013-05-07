@@ -28,6 +28,7 @@ GameScreen::GameScreen(Game* game)
     this->_seedScreen = 0;
     
     this->_hud_currentDisplayedSeed = 0;
+    this->_hoverSeed = 0;
     this->_hud_seedName = sf::Text("No Seed Selected",_game->_assets.fonts.upheav,16);
     this->_hud_seedName.setPosition(HUD_LEFT,20);
     this->_hud_seedName.setColor(sf::Color::White);
@@ -243,6 +244,17 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     if(_seedScreen == 0)
     {
         _data->garden->draw(window,delta,_game->_mouse);
+        sf::Vector2f worldCoord = _game->_mouse->getWorldPosition(*window);
+        Grid selectedGrid = Grid::toGrid(worldCoord.x,worldCoord.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
+        Pixel* pixel = _data->garden->pixelAt(selectedGrid.row,selectedGrid.col);
+        if(pixel != 0 && pixel->getParentSeed() != 0)
+        {
+            _hoverSeed = pixel->getParentSeed();
+        }
+        else
+        {
+            _hoverSeed = 0;
+        }
     }
     else
     {
@@ -252,13 +264,19 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     {
         _seedScreen->draw(window,delta);
     }
-    if(_data != 0 && _hud_currentDisplayedSeed != _data->selectedSeed)
+    setDisplayedSeed(_hoverSeed != 0 ? _hoverSeed : (_data != 0 ? _data->selectedSeed : 0));
+    drawHud(window,delta);
+}
+
+void GameScreen::setDisplayedSeed(Seed* seed)
+{
+    if(_hud_currentDisplayedSeed != seed)
     {
-        if(_data->selectedSeed != 0)
+        _hud_currentDisplayedSeed = seed;
+        if(_hud_currentDisplayedSeed != 0)
         {
-            _hud_currentDisplayedSeed = _data->selectedSeed;
-            this->_hud_seedName.setString("Seed Id : #"+zf::toString(_data->selectedSeed->_id));
-            
+            this->_hud_seedName.setString("Seed Id : #"+zf::toString(_hud_currentDisplayedSeed->_id));
+
             this->_hud_growthSegText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.growthSegments));
             this->_hud_growthSegText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.growthSegments));
             this->_hud_growthSegText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.growthSegments));
@@ -304,10 +322,10 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
         }
         else
         {
-            this->_hud_seedName.setString("No Seed Selected");
+            this->_hud_seedName.setString("No seed Selected");
         }
+
     }
-    drawHud(window,delta);
 }
 
 
@@ -410,6 +428,7 @@ void GameScreen::initNewGame()
 void GameScreen::showSeedScreen()
 {
     _seedScreen = new SeedScreen(_game,_data);
+    _hoverSeed = 0;
 }
 
 void GameScreen::hideSeedScreen()

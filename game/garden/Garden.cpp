@@ -104,8 +104,7 @@ void Garden::draw(sf::RenderWindow* window, sf::Time &delta)
 void Garden::draw(sf::RenderWindow* window, sf::Time &delta,zf::Mouse* mouse)
 {
     draw(window,delta);
-    sf::Vector2i pixelPos = mouse->getPosition(*window);
-    sf::Vector2f mousePos = window->mapPixelToCoords(pixelPos);
+    sf::Vector2f mousePos = mouse->getWorldPosition(*window);
     Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
     if(inRange(selectedGrid.row,selectedGrid.col))
     {
