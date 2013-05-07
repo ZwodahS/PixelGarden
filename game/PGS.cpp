@@ -47,8 +47,6 @@ PGS::PGS(Game* game,Seed* seed,sf::Vector2f drawOffset)
         sf::Color color = _game->_pgsColor[id];
         gblocks[id].setFillColor(sf::Color(color.r,color.g,color.b,255));
     }
-    std::cout << _seed->_unexpressedGenes.size() << std::endl;
-    std::cout << _seed->_expressedGenes.size() << std::endl;
 }
 
 PGS::~PGS()

@@ -522,7 +522,7 @@ Pixel* Pixel::findNextPixelToGrow()
             targetPixel = temp;
             break;
         }
-        else if(temp->hasParentSeed(_seed)) // if next pixel is matured, check if it is our own. if it is , search above it
+        else if(isPartOfUs(temp)) // if next pixel is matured, check if it is our own. if it is , search above it
         {
             next += direction;
         }
@@ -532,4 +532,20 @@ Pixel* Pixel::findNextPixelToGrow()
         }
     }
     return targetPixel;
+}
+
+bool Pixel::isPartOfUs(Pixel* pixel)
+{
+    if(pixel == this)
+    {
+        return true;
+    }
+    for(int i = 0 ; i < _leafPixels.size() ; i++)
+    {
+        if(pixel == _leafPixels[i])
+        {
+            return true;
+        }
+    }
+    return false;
 }

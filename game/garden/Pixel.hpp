@@ -99,6 +99,8 @@ class Pixel
         void clearMaturedState();
         
         Seed* crossBreed();
+        
+        bool isPartOfUs(Pixel* pixel);
 
         void updateDeadTurn(std::vector<Seed*> &newSeeds);
         void updateSeedTurn(std::vector<Seed*> &newSeeds);
