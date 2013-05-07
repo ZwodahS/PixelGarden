@@ -41,7 +41,8 @@ PGS::PGS(Game* game,Seed* seed,sf::Vector2f drawOffset)
     for(int i = 0 ; i < _seed->_expressedGenes.size() ; i++)
     {
         int id = _game->_pgsSequence[_seed->_expressedGenes[i]->id]; 
-        sf::Sprite s = _game->_pgsColor[_game->_pgsSequence[id]]->createSprite();
+        //sf::Sprite s = _game->_pgsColor[_game->_pgsSequence[id]]->createSprite();
+        sf::Sprite s = _game->_pgsColor[id]->createSprite();
         _gblocks[id].setTextureRect(s.getTextureRect());
     }
 }

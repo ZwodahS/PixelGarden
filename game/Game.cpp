@@ -24,6 +24,7 @@ Game::Game()
     {
         _pgsSequence[i] = i;
     }
+    random_shuffle(_pgsSequence.begin(),_pgsSequence.end());
     _pgsColor = std::vector<TextureRegion*>(0);
     for(int i = 0 ; i < _pgsSequence.size() ; i++)
     {
@@ -59,7 +60,6 @@ Game::Game()
                 _pgsColor[i]=&_assets.pixel.pgs.gray;
         }
     }
-    random_shuffle(_pgsSequence.begin(),_pgsSequence.end());
 }
 
 Game::~Game()

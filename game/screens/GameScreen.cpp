@@ -12,7 +12,7 @@
 
 #define GROWTH_SEG_ROW_ONE 200
 
-#define HELP_TEXT_HUD 400
+#define HELP_TEXT_HUD 430
 #define HELP_TEXT_SPACING 20
 #define PGS_X_OFFSET 665
 #define PGS_Y_OFFSET 260

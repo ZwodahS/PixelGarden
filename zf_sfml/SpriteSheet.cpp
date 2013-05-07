@@ -16,6 +16,8 @@ SpriteSheet::SpriteSheet(sf::IntRect spriteSize, int row, int col)
     this->texture.create(size.width,size.height);
     currRow = 0;
     currCol = 0;
+    maxrow = row;
+    maxcol = col;
     bool managed = true;
 }
 
