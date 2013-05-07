@@ -2,6 +2,19 @@
 #define _GAME_ASSETS_H_
 #include "../zf_sfml/SpriteSheet.hpp"
 
+struct PGSAssets
+{
+    TextureRegion red;
+    TextureRegion blue;
+    TextureRegion green;
+    TextureRegion orange;
+    TextureRegion purple;
+    TextureRegion yellow;
+    TextureRegion cyan;
+    TextureRegion dark;
+    TextureRegion gray;
+};
+
 struct SegmentAssets
 {
     TextureRegion sourceNorth;
@@ -24,7 +37,7 @@ struct PixelAssets
     TextureRegion SW;
     TextureRegion seed;
     TextureRegion seedSlot;
-    
+    PGSAssets pgs;    
     SegmentAssets segments;
 };
 

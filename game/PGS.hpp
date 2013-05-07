@@ -16,6 +16,6 @@ class PGS
         Seed* _seed;
         Game* _game;
 
-        std::vector<sf::RectangleShape> gblocks;
+        std::vector<sf::Sprite> _gblocks;
 };
 #endif

@@ -82,7 +82,41 @@ void Game::initAssets()
     _assets.pixel.segments.sourceSouth = TextureRegion(region.texture,sf::IntRect(srcClip.left+16,srcClip.top+16,16,16));
     _assets.pixel.segments.sourceWest  = TextureRegion(region.texture,sf::IntRect(srcClip.left+32,srcClip.top+16,16,16));
     _assets.pixel.segments.sourceNorth = TextureRegion(region.texture,sf::IntRect(srcClip.left+48,srcClip.top+16,16,16));
+
+    // PGS assets
+    group.create(64,64,sf::Color(0,0,0,0));
+    image.loadFromFile("assets/img/pgs/blue.png");
+    group.copy(image,0,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/cyan.png");
+    group.copy(image,16,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/dark.png");
+    group.copy(image,32,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/gray.png");
+    group.copy(image,48,0,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/green.png");
+    group.copy(image,0,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/orange.png");
+    group.copy(image,16,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/purple.png");
+    group.copy(image,32,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/red.png");
+    group.copy(image,48,16,sf::IntRect(0,0,0,0),true);
+    image.loadFromFile("assets/img/pgs/yellow.png");
+    group.copy(image,0,32,sf::IntRect(0,0,0,0),true);
     
+    region = _assets.pixel.spriteSheet.createRegion(group);
+    srcClip = region.srcClip;
+
+    _assets.pixel.pgs.blue   = TextureRegion(region.texture,sf::IntRect(srcClip.left + 0  ,srcClip.top + 0  , 16 , 16));
+    _assets.pixel.pgs.cyan   = TextureRegion(region.texture,sf::IntRect(srcClip.left + 16 ,srcClip.top + 0  , 16 , 16));
+    _assets.pixel.pgs.dark   = TextureRegion(region.texture,sf::IntRect(srcClip.left + 32 ,srcClip.top + 0  , 16 , 16));
+    _assets.pixel.pgs.gray   = TextureRegion(region.texture,sf::IntRect(srcClip.left + 48 ,srcClip.top + 0  , 16 , 16));
+    _assets.pixel.pgs.green  = TextureRegion(region.texture,sf::IntRect(srcClip.left + 0  ,srcClip.top + 16 , 16 , 16));
+    _assets.pixel.pgs.orange = TextureRegion(region.texture,sf::IntRect(srcClip.left + 16 ,srcClip.top + 16 , 16 , 16));
+    _assets.pixel.pgs.purple = TextureRegion(region.texture,sf::IntRect(srcClip.left + 32 ,srcClip.top + 16 , 16 , 16));
+    _assets.pixel.pgs.red    = TextureRegion(region.texture,sf::IntRect(srcClip.left + 48 ,srcClip.top + 16 , 16 , 16));
+    _assets.pixel.pgs.yellow = TextureRegion(region.texture,sf::IntRect(srcClip.left + 0  ,srcClip.top + 32 , 16 , 16));
     // load fonts
     _assets.fonts.upheav.loadFromFile("assets/fonts/upheavtt.ttf");
+
 }

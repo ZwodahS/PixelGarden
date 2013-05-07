@@ -24,10 +24,40 @@ Game::Game()
     {
         _pgsSequence[i] = i;
     }
-    _pgsColor = std::vector<sf::Color>(0);
+    _pgsColor = std::vector<TextureRegion*>(0);
     for(int i = 0 ; i < _pgsSequence.size() ; i++)
     {
-        _pgsColor.push_back(sf::Color(COLOR_MIN+(rand()%COLOR_LEFT),COLOR_MIN+(rand()%COLOR_LEFT),COLOR_MIN+(rand()%COLOR_LEFT)));
+        _pgsColor.push_back(0);
+    }
+    for(int i = 0 ; i < _pgsSequence.size() ; i++)
+    {
+        int r = i  % 7 ;
+        switch(r)
+        {
+            case 0:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.red;
+                break;
+            case 1:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.blue;
+                break;
+            case 2:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.green;
+                break;
+            case 3:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.orange;
+                break;
+            case 4:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.purple;
+                break;
+            case 5:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.yellow;
+                break;
+            case 6:
+                _pgsColor[_pgsSequence[i]]=&_assets.pixel.pgs.cyan;
+                break;
+            default : // just in case ?
+                _pgsColor[i]=&_assets.pixel.pgs.gray;
+        }
     }
     random_shuffle(_pgsSequence.begin(),_pgsSequence.end());
 }

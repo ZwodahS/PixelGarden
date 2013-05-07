@@ -27,7 +27,7 @@ class Game
         sf::Sprite createSprite(GrowthSegment gs);
         
         std::vector<int> _pgsSequence;
-        std::vector<sf::Color> _pgsColor;
+        std::vector<TextureRegion*> _pgsColor;
     private:
         Screen* _currentScreen;
         bool update(sf::Time delta);
