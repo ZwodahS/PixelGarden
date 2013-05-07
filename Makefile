@@ -7,9 +7,10 @@ vpath %.cpp game/screens
 vpath %.cpp test/
 vpath %.o obj/
 
-BIN=pixelgarden
+BIN=pg
+OUTBIN=pixelgarden
 CXX=g++
-
+DIST=pixelgarden
 SFML=-framework sfml-graphics -framework sfml-window -framework sfml-system
 OBJDIR=obj
 
@@ -39,9 +40,15 @@ $(OBJDIR)/%.o : %.cpp
 obj/main.o : main.cpp 
 	$(CXX) -c -o $@ $^
 
+dist:
+	mkdir $(DIST)
+	cp -r assets $(DIST)
+	cp $(BIN) $(DIST)/$(OUTBIN)
+
 clean:
 	rm obj/*.o
 	rm $(BIN)
+	rm -rf $(DIST)
 
 remake:
 	make clean
@@ -49,4 +56,4 @@ remake:
 
 debug:
 	@echo $(zf_sfml)
-.PHONY: clean remake debug
+.PHONY: clean remake debug dist

@@ -153,15 +153,22 @@ GameScreen::GameScreen(Game* game)
     sf::Text* bonus2 = new sf::Text("  expressed Genes",_game->_assets.fonts.upheav,16);
     bonus2->setColor(sf::Color::Green);
     sf::Text* final = new sf::Text("White is final stats",_game->_assets.fonts.upheav,16);
-    final->setColor(sf::Color::Red);
-    sf::Text* invText = new sf::Text("<I> to open the list of seeds",_game->_assets.fonts.upheav,16);
-    sf::Text* spaceText = new sf::Text("<Space> to advance the garden",_game->_assets.fonts.upheav,16);
-    sf::Text* space2    = new sf::Text(" by 1 turn",_game->_assets.fonts.upheav,16);
+    final->setColor(sf::Color::White);
 
+
+    sf::Text* invText = new sf::Text("<I> to open the list of seeds",_game->_assets.fonts.upheav,16);
+    invText->setColor(sf::Color(150,20,20));
+    sf::Text* spaceText = new sf::Text("<Space> to advance the garden",_game->_assets.fonts.upheav,16);
+    spaceText->setColor(sf::Color(150,20,20));
+    sf::Text* space2    = new sf::Text(" by 1 turn",_game->_assets.fonts.upheav,16);
+    space2->setColor(sf::Color(150,20,20));
     sf::Text* mutation = new sf::Text("Combine 2 or more seed by letting",_game->_assets.fonts.upheav,16);
+    mutation->setColor(sf::Color(150,20,20));
     sf::Text* mutation2 = new sf::Text(" them grow into the same pixel.",_game->_assets.fonts.upheav,16);
+    mutation2->setColor(sf::Color(150,20,20));
 
     sf::Text* rest = new sf::Text("The rest is up to you to find out...",_game->_assets.fonts.upheav,16);
+    rest->setColor(sf::Color(150,20,20));
     this->_hud_helpTexts.push_back(baseText);
     this->_hud_helpTexts.push_back(bonus);
     this->_hud_helpTexts.push_back(bonus2);

@@ -240,3 +240,12 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution*> &contributions)
     _used.push_back(0);
     return newSeed;
 }
+
+Seed* SeedManager::getSeedById(int id)
+{
+    if(_seeds.size() > id)
+    {
+        return _seeds[id];
+    }
+    return 0;
+}

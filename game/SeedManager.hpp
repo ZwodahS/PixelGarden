@@ -26,6 +26,7 @@ class SeedManager
         int getCount(Seed* seed);
         int getUsed(Seed* seed);
         void seedPlanted(Seed* seed);
+        Seed* getSeedById(int id);
     protected:
         std::vector<Seed*> _seeds;
         std::vector<int>   _counts;
