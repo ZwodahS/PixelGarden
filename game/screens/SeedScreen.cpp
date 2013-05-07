@@ -120,14 +120,7 @@ void SeedSlot::updateValues()
     _iconSprite.setPosition(_position.x+8,_position.y+8);
     _countText.setPosition(_position.x+40,_position.y+32);
     _countText.setString(zf::toString(_count));
-    if(_count > 0)
-    {
-        _countText.setColor(sf::Color::Blue);
-    }
-    else
-    {
-        _countText.setColor(sf::Color::Red);
-    }
+    _countText.setColor(sf::Color::Black);
     PixelColor color = _seed->_color;
     color.normalizeTo(255);
     _iconSprite.setColor(sf::Color(color.r,color.g,color.b));

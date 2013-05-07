@@ -11,7 +11,7 @@
 
 #define GROWTH_SEG_ROW_ONE 200
 
-#define HELP_TEXT_HUD 500
+#define HELP_TEXT_HUD 300
 #define HELP_TEXT_SPACING 20
 
 GameScreen::GameScreen(Game* game)
@@ -139,11 +139,8 @@ GameScreen::GameScreen(Game* game)
 
 
     this->_hud_growthSegments = std::vector<sf::Sprite>(0);
-    
+// HELP TEXT    
     this->_hud_helpTexts = std::vector<sf::Text*>(0);
-    sf::Text* invText = new sf::Text("<I> to open the list of seeds",_game->_assets.fonts.upheav,16);
-    sf::Text* spaceText = new sf::Text("<Space> to advance the garden",_game->_assets.fonts.upheav,16);
-    sf::Text* space2    = new sf::Text("        by 1 turn",_game->_assets.fonts.upheav,16);
     sf::Text* baseText = new sf::Text("Blue is base stats",_game->_assets.fonts.upheav,16);
     baseText->setColor(sf::Color::Blue);
     sf::Text* bonus = new sf::Text("Green is bonus stats from",_game->_assets.fonts.upheav,16);
@@ -152,6 +149,12 @@ GameScreen::GameScreen(Game* game)
     bonus2->setColor(sf::Color::Green);
     sf::Text* final = new sf::Text("White is final stats",_game->_assets.fonts.upheav,16);
     final->setColor(sf::Color::Red);
+    sf::Text* invText = new sf::Text("<I> to open the list of seeds",_game->_assets.fonts.upheav,16);
+    sf::Text* spaceText = new sf::Text("<Space> to advance the garden",_game->_assets.fonts.upheav,16);
+    sf::Text* space2    = new sf::Text(" by 1 turn",_game->_assets.fonts.upheav,16);
+
+    sf::Text* mutation = new sf::Text("Combine 2 or more seed by letting",_game->_assets.fonts.upheav,16);
+    sf::Text* mutation2 = new sf::Text(" them grow into the same pixel.",_game->_assets.fonts.upheav,16);
     this->_hud_helpTexts.push_back(baseText);
     this->_hud_helpTexts.push_back(bonus);
     this->_hud_helpTexts.push_back(bonus2);
@@ -159,6 +162,8 @@ GameScreen::GameScreen(Game* game)
     this->_hud_helpTexts.push_back(invText);
     this->_hud_helpTexts.push_back(spaceText);
     this->_hud_helpTexts.push_back(space2);
+    this->_hud_helpTexts.push_back(mutation);
+    this->_hud_helpTexts.push_back(mutation2);
     for(int i = 0 ; i < _hud_helpTexts.size() ; i++)
     {
         _hud_helpTexts[i]->setPosition(HUD_LEFT,HELP_TEXT_HUD+(i*HELP_TEXT_SPACING));
