@@ -161,7 +161,7 @@ GameScreen::GameScreen(Game* game)
     sf::Text* mutation = new sf::Text("Combine 2 or more seed by letting",_game->_assets.fonts.upheav,16);
     sf::Text* mutation2 = new sf::Text(" them grow into the same pixel.",_game->_assets.fonts.upheav,16);
 
-    sf::Text* rest = new sf::Text("The rest is up to you find out...",_game->_assets.fonts.upheav,16);
+    sf::Text* rest = new sf::Text("The rest is up to you to find out...",_game->_assets.fonts.upheav,16);
     this->_hud_helpTexts.push_back(baseText);
     this->_hud_helpTexts.push_back(bonus);
     this->_hud_helpTexts.push_back(bonus2);
