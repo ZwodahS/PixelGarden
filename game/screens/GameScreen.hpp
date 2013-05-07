@@ -2,7 +2,6 @@
 #define _GAME_SCREENS_GAMESCREEN_H_
 
 #include "Screen.hpp"
-
 #include "../GeneManager.hpp"
 #include "../SeedManager.hpp"
 #include "../g_seeds.hpp"
@@ -14,6 +13,7 @@
 
 class Game;
 class SeedScreen;
+class PGS;
 class GameScreen : public Screen
 {
     public:
@@ -51,8 +51,9 @@ class GameScreen : public Screen
 
         void drawHud(sf::RenderWindow* window, sf::Time delta);
 
-
+        sf::Text _hud_pgs;
         std::vector<sf::Text*> _hud_helpTexts;
+        PGS* pgs;
 };
 
 #endif

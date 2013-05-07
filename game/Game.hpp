@@ -25,7 +25,9 @@ class Game
         InputControl* _keyInput;
 
         sf::Sprite createSprite(GrowthSegment gs);
-
+        
+        std::vector<int> _pgsSequence;
+        std::vector<sf::Color> _pgsColor;
     private:
         Screen* _currentScreen;
         bool update(sf::Time delta);

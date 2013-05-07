@@ -41,7 +41,7 @@ std::vector<Gene*> GeneManager::getDefaultUnexpressedGenes()
     std::vector<Gene*> genes;
     for(int i = 0 ; i < _genes.size () ; i++)
     {
-        if(i != 12 && i != 20 && i != 28 && i != 40 && i != 41)
+        if( i != 0 && i != 12 && i != 20 && i != 28 && i != 48 && i != 49)
         {
             genes.push_back(_genes[i]);
         }

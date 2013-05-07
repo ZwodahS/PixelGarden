@@ -2,6 +2,7 @@
 #include "SeedScreen.hpp"
 #include "../consts.hpp"
 #include "../Game.hpp"
+#include "../PGS.hpp"
 #include "../../zf_sfml/Mouse.hpp"
 
 #define HUD_LEFT 650
@@ -11,12 +12,14 @@
 
 #define GROWTH_SEG_ROW_ONE 200
 
-#define HELP_TEXT_HUD 300
+#define HELP_TEXT_HUD 400
 #define HELP_TEXT_SPACING 20
-
+#define PGS_X_OFFSET 665
+#define PGS_Y_OFFSET 260
 GameScreen::GameScreen(Game* game)
     :Screen(game)
 {
+    this->pgs = 0;
     this->_gardenView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT));
     this->_gardenView.setViewport(sf::FloatRect(0,0,1,1));
     this->_hudView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH, displayconsts::DISPLAY_HEIGHT));
@@ -137,6 +140,8 @@ GameScreen::GameScreen(Game* game)
     this->_hud_geneTitle = sf::Text("Gene List",_game->_assets.fonts.upheav,16);
     this->_hud_geneId = std::vector<sf::Text*>(0);
 
+    this->_hud_pgs = sf::Text("Pixel Gene Structure",_game->_assets.fonts.upheav,16);
+    this->_hud_pgs.setPosition(PGS_X_OFFSET,PGS_Y_OFFSET - 30);
 
     this->_hud_growthSegments = std::vector<sf::Sprite>(0);
 // HELP TEXT    
@@ -284,6 +289,11 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
                 _hud_growthSegments.push_back(_game->createSprite(_hud_currentDisplayedSeed->_segments[i]));
                 _hud_growthSegments[i].setPosition(HUD_LEFT + (i * 18), GROWTH_SEG_ROW_ONE);
             }
+            if(pgs != 0)
+            {
+                delete pgs;
+            }
+            pgs = new PGS(_game,_hud_currentDisplayedSeed, sf::Vector2f(PGS_X_OFFSET,PGS_Y_OFFSET));
         }
         else
         {
@@ -371,6 +381,8 @@ void GameScreen::drawHud(sf::RenderWindow* window, sf::Time delta)
         {
             window->draw(_hud_growthSegments[i]);
         }
+        window->draw(_hud_pgs);
+        pgs->draw(window,delta);
     } 
 
     for(int i = 0 ; i < _hud_helpTexts.size() ; i++)

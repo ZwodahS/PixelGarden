@@ -2,14 +2,16 @@
 #include "garden/Garden.hpp"
 #include "consts.hpp"
 
-
 #include "../zf_sfml/Mouse.hpp"
 #include "../zf_sfml/TextureRegion.hpp"
 
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <algorithm>
 
+#define COLOR_MIN 100
+#define COLOR_LEFT 155
 
 Game::Game()
 {
@@ -17,6 +19,17 @@ Game::Game()
     initAssets();
     this->_mouse = new zf::Mouse();
     this->_keyInput   = new InputControl();
+    _pgsSequence = std::vector<int>(58);
+    for(int i = 0 ; i < _pgsSequence.size() ; i++)
+    {
+        _pgsSequence[i] = i;
+    }
+    _pgsColor = std::vector<sf::Color>(0);
+    for(int i = 0 ; i < _pgsSequence.size() ; i++)
+    {
+        _pgsColor.push_back(sf::Color(COLOR_MIN+(rand()%COLOR_LEFT),COLOR_MIN+(rand()%COLOR_LEFT),COLOR_MIN+(rand()%COLOR_LEFT)));
+    }
+    random_shuffle(_pgsSequence.begin(),_pgsSequence.end());
 }
 
 Game::~Game()
