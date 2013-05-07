@@ -141,7 +141,7 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
         if(_data->selectedSeed != 0)
         {
             _hud_currentDisplayedSeed = _data->selectedSeed;
-            this->_hud_seedName.setString(zf::toString(_data->selectedSeed->_id));
+            this->_hud_seedName.setString("Seed Id : #"+zf::toString(_data->selectedSeed->_id));
             
             this->_hud_growthSegText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.growthSegments));
             this->_hud_growthSegText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.growthSegments));
@@ -211,6 +211,7 @@ void GameScreen::update(sf::RenderWindow* window, sf::Time delta)
                     sf::Vector2f mousePos = _game->_mouse->getWorldPosition(*window);
                     Grid selectedGrid = Grid::toGrid(mousePos.x,mousePos.y,displayconsts::PIXEL_SIZE,displayconsts::PIXEL_SPACING);
                     _data->garden->plantSeed(_data->selectedSeed, selectedGrid);
+                    _data->seedManager->seedPlanted(_data->selectedSeed);
                 }
             }
             else if(_game->_keyInput->processOneTurn.thisReleased)
@@ -227,14 +228,14 @@ void GameScreen::drawHud(sf::RenderWindow* window, sf::Time delta)
     window->draw(_hud_seedName);
     if(_hud_currentDisplayedSeed != 0)
     {
-        for(int i = 0 ; i < _hud_seedDecayText.size() ; i++)
-        {
-            window->draw(*_hud_seedDecayText[i]);
-        }
-        for(int i = 0 ; i < _hud_seedMaturedText.size() ; i++)
-        {
-            window->draw(*_hud_seedMaturedText[i]);
-        }
+        //for(int i = 0 ; i < _hud_seedDecayText.size() ; i++)
+        //{
+        //    window->draw(*_hud_seedDecayText[i]);
+        //}
+        //for(int i = 0 ; i < _hud_seedMaturedText.size() ; i++)
+        //{
+        //    window->draw(*_hud_seedMaturedText[i]);
+        //}
         for(int i = 0 ; i < _hud_genesText.size() ; i++)
         {
             window->draw(*_hud_genesText[i]);

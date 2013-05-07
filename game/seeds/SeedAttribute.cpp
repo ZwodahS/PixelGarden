@@ -40,7 +40,7 @@ SeedAttribute& SeedAttribute::operator+=(const SeedAttribute &rhs)
 
 void SeedAttribute::setToMinMax()
 {
-    this->growthSegments = growthSegments < 1 ? 1 : this->growthSegments;
+    this->growthSegments = growthSegments < 1 ? 1 : (growthSegments > 15 ? 15 : this->growthSegments);
     this->growthTurns = growthTurns < 1 ? 1 : this->growthTurns;
     this->maturedDuration = maturedDuration < 1 ? 1 : this->maturedDuration;
     this->decayTurns = decayTurns < 1 ? 1 : this->decayTurns;

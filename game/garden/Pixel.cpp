@@ -44,6 +44,13 @@ bool Pixel::plantSeed(Seed* seed)
     this->_displayedColor = this->_accumulatedColor;
     this->_state = pixelstate::SEED;
     this->_plantState = plantstate::GROWING;
+    this->_seedSprite = _game->_assets.pixel.seed.createSprite();
+    this->_seedSprite.setPosition(
+            8+displayconsts::PIXEL_SPACING + (_location.col * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING)), 
+            8+displayconsts::PIXEL_SPACING + (_location.row * (displayconsts::PIXEL_SIZE + displayconsts::PIXEL_SPACING))
+            );
+    this->_seedSprite.setScale(0.5f,0.5f);
+    this->_seedSprite.setColor(sf::Color(50,50,50));
     return true;
 }
 
@@ -404,7 +411,12 @@ void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
     }
     else
     {
-        if(_state == pixelstate::DECAYING || _plantState == plantstate::DECAYING)
+        if(_state == pixelstate::SEED && _plantState == plantstate::DECAYING)
+        {
+            _seedSprite.setColor(sf::Color(50,50,50,100));
+            _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,100));
+        }
+        else if(_state == pixelstate::DECAYING)
         {
             _mainPixel.setColor(sf::Color(_displayedColor.r,_displayedColor.g,_displayedColor.b,100));
         }
@@ -414,6 +426,10 @@ void Pixel::draw(sf::RenderWindow* window, sf::Time &delta)
         }
     }
     window->draw(_mainPixel);
+    if(_state == pixelstate::SEED)
+    {
+        window->draw(_seedSprite);
+    }
 }
 
 bool Pixel::canPlant(Seed* seed)

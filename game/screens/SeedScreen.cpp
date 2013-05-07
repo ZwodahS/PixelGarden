@@ -17,7 +17,7 @@ SeedScreen::SeedScreen(Game* game,GameData* data)
     int c = 0;
     for(std::vector<Seed*>::iterator it = data->seedManager->getIterator() ; it != data->seedManager->end() ;it++)
     {
-        SeedSlot* slot = new SeedSlot(_game,*it,_data->seedManager->getCount(*it));
+        SeedSlot* slot = new SeedSlot(_game,*it,_data->seedManager->getUsed(*it));
         slot->_position = sf::Vector2i(c*64,r*64);
         i++;
         c++;
@@ -122,7 +122,7 @@ void SeedSlot::updateValues()
     _countText.setString(zf::toString(_count));
     if(_count > 0)
     {
-        _countText.setColor(sf::Color::Green);
+        _countText.setColor(sf::Color::Blue);
     }
     else
     {

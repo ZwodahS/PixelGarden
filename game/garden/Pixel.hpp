@@ -75,7 +75,7 @@ class Pixel
 
     /// DRAW STUFFS ///
         sf::Sprite _mainPixel;
-
+        sf::Sprite _seedSprite;
 
     ////// for state seed. //////
         Seed* _seed; // the seed that is planted here. only valid if state = SEED.    

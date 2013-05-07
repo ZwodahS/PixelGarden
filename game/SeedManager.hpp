@@ -24,10 +24,12 @@ class SeedManager
         std::vector<Seed*>::iterator end();
 
         int getCount(Seed* seed);
+        int getUsed(Seed* seed);
+        void seedPlanted(Seed* seed);
     protected:
         std::vector<Seed*> _seeds;
         std::vector<int>   _counts;
-        
+        std::vector<int>   _used;
         GeneManager* _genesManager;
 };
 #endif
