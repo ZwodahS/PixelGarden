@@ -53,11 +53,13 @@ void SeedManager::initBaseSeeds()
     std::vector<GrowthSegment> segments;
     segments.push_back(GROW_SOURCE_WEST);
     segments.push_back(GROW_SOURCE_WEST);
+    segments.push_back(GROW_SOURCE_WEST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,0,0),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
     this->_used.push_back(0);
     //the right seed will be blue
     segments.clear();
+    segments.push_back(GROW_SOURCE_EAST);
     segments.push_back(GROW_SOURCE_EAST);
     segments.push_back(GROW_SOURCE_EAST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(0,0,200),seedAttr,segments));
@@ -67,11 +69,13 @@ void SeedManager::initBaseSeeds()
     segments.clear();
     segments.push_back(GROW_SOURCE_NORTH);
     segments.push_back(GROW_SOURCE_NORTH);
+    segments.push_back(GROW_SOURCE_NORTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(0,200,0),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
     this->_used.push_back(0);
     // the top seed will be gray
     segments.clear();
+    segments.push_back(GROW_SOURCE_SOUTH);
     segments.push_back(GROW_SOURCE_SOUTH);
     segments.push_back(GROW_SOURCE_SOUTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,200,200),seedAttr,segments));
@@ -81,11 +85,13 @@ void SeedManager::initBaseSeeds()
     segments.clear();
     segments.push_back(GROW_LAST_WEST);
     segments.push_back(GROW_LAST_WEST);
+    segments.push_back(GROW_LAST_WEST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,200,0),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
     this->_used.push_back(0);
     //the right seed will be blue
     segments.clear();
+    segments.push_back(GROW_LAST_EAST);
     segments.push_back(GROW_LAST_EAST);
     segments.push_back(GROW_LAST_EAST);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(200,0,200),seedAttr,segments));
@@ -95,11 +101,13 @@ void SeedManager::initBaseSeeds()
     segments.clear();
     segments.push_back(GROW_LAST_NORTH);
     segments.push_back(GROW_LAST_NORTH);
+    segments.push_back(GROW_LAST_NORTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(0,200,200),seedAttr,segments));
     this->_counts.push_back(gameconsts::STARTING_SEED);
     this->_used.push_back(0);
     // the top seed will be gray
     segments.clear();
+    segments.push_back(GROW_LAST_SOUTH);
     segments.push_back(GROW_LAST_SOUTH);
     segments.push_back(GROW_LAST_SOUTH);
     this->_seeds.push_back(new Seed(_seeds.size(),expressedGenes,unexpressedGenes,PixelColor(50,50,50),seedAttr,segments));
@@ -211,7 +219,6 @@ Seed* SeedManager::crossBreed(std::vector<ParentContribution*> &contributions)
             }
         }
     }
-
     std::vector<GrowthSegment> segments;
 
     Seed* newSeed = new Seed(_seeds.size(), expressedGenes, unexpressedGenes,newColor,baseAttribute);

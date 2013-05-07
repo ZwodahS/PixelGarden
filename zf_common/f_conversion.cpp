@@ -21,4 +21,15 @@ namespace zf
         std::string str1 = sstr.str();
         return str1;
     }
+    std::string toStringSigned(int i)
+    {
+        std::stringstream sstr;
+        sstr << i;
+        std::string str1 = sstr.str();
+        if(i > 0)
+        {
+            str1 = "+" + str1;
+        }
+        return str1;
+    }
 }

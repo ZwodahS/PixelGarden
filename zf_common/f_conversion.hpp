@@ -7,5 +7,6 @@ namespace zf
 {
     bool toInt(std::string str, int &value);
     std::string toString(int i);
+    std::string toStringSigned(int i);
 }
 #endif

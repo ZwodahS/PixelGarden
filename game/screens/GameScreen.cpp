@@ -155,6 +155,8 @@ GameScreen::GameScreen(Game* game)
 
     sf::Text* mutation = new sf::Text("Combine 2 or more seed by letting",_game->_assets.fonts.upheav,16);
     sf::Text* mutation2 = new sf::Text(" them grow into the same pixel.",_game->_assets.fonts.upheav,16);
+
+    sf::Text* rest = new sf::Text("The rest is up to you find out...",_game->_assets.fonts.upheav,16);
     this->_hud_helpTexts.push_back(baseText);
     this->_hud_helpTexts.push_back(bonus);
     this->_hud_helpTexts.push_back(bonus2);
@@ -164,6 +166,7 @@ GameScreen::GameScreen(Game* game)
     this->_hud_helpTexts.push_back(space2);
     this->_hud_helpTexts.push_back(mutation);
     this->_hud_helpTexts.push_back(mutation2);
+    this->_hud_helpTexts.push_back(rest);
     for(int i = 0 ; i < _hud_helpTexts.size() ; i++)
     {
         _hud_helpTexts[i]->setPosition(HUD_LEFT,HELP_TEXT_HUD+(i*HELP_TEXT_SPACING));
@@ -245,31 +248,31 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
             this->_hud_seedName.setString("Seed Id : #"+zf::toString(_data->selectedSeed->_id));
             
             this->_hud_growthSegText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.growthSegments));
-            this->_hud_growthSegText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.growthSegments));
+            this->_hud_growthSegText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.growthSegments));
             this->_hud_growthSegText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.growthSegments));
 
             this->_hud_growthTurnText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.growthTurns));
-            this->_hud_growthTurnText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.growthTurns));
+            this->_hud_growthTurnText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.growthTurns));
             this->_hud_growthTurnText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.growthTurns));
 
             this->_hud_maturedDurationsText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.maturedDuration));
-            this->_hud_maturedDurationsText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.maturedDuration));
+            this->_hud_maturedDurationsText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.maturedDuration));
             this->_hud_maturedDurationsText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.maturedDuration));
 
             this->_hud_decayTurnText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.decayTurns));
-            this->_hud_decayTurnText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.decayTurns));
+            this->_hud_decayTurnText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.decayTurns));
             this->_hud_decayTurnText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.decayTurns));
 
             this->_hud_genesText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.maxExpressedTraits));
-            this->_hud_genesText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.maxExpressedTraits));
+            this->_hud_genesText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.maxExpressedTraits));
             this->_hud_genesText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.maxExpressedTraits));
 
             this->_hud_seedMaturedText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.maturedSeed.chance));
-            this->_hud_seedMaturedText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.maturedSeed.chance));
+            this->_hud_seedMaturedText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.maturedSeed.chance));
             this->_hud_seedMaturedText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.maturedSeed.chance));
 
             this->_hud_seedDecayText[1]->setString(zf::toString(_hud_currentDisplayedSeed->_baseAttributes.decaySeed.chance));
-            this->_hud_seedDecayText[2]->setString(zf::toString(_hud_currentDisplayedSeed->_bonusAttributes.decaySeed.chance));
+            this->_hud_seedDecayText[2]->setString(zf::toStringSigned(_hud_currentDisplayedSeed->_bonusAttributes.decaySeed.chance));
             this->_hud_seedDecayText[3]->setString(zf::toString(_hud_currentDisplayedSeed->_effectiveAttributes.decaySeed.chance));
             
             this->_hud_color[1]->setString(zf::toString(_hud_currentDisplayedSeed->_color.r));
