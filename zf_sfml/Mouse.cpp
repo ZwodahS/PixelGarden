@@ -3,6 +3,7 @@
 
 zf::Mouse::Mouse()
 {
+    _wheelDelta = 0;
 }
 
 zf::Mouse::~Mouse()
@@ -10,6 +11,11 @@ zf::Mouse::~Mouse()
 }
 
 void zf::Mouse::update(sf::Time delta)
+{
+    update(delta,0);
+}
+
+void zf::Mouse::update(sf::Time delta, int wheelDelta)
 {
     zf_inputs::processKey(_left, sf::Mouse::isButtonPressed(sf::Mouse::Left));
     zf_inputs::processKey(_right, sf::Mouse::isButtonPressed(sf::Mouse::Right));

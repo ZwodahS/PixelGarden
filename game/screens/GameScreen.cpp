@@ -15,8 +15,6 @@ GameScreen::GameScreen(Game* game)
 {
     this->_gardenView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH,displayconsts::DISPLAY_HEIGHT));
     this->_gardenView.setViewport(sf::FloatRect(0,0,1,1));
-    this->_seedView = sf::View(sf::FloatRect(0,0,0.8f * displayconsts::DISPLAY_WIDTH, 0.8f * displayconsts::DISPLAY_HEIGHT));
-    this->_seedView.setViewport(sf::FloatRect(0.1f,0.1f,0.8f,0.8f));
     this->_hudView = sf::View(sf::FloatRect(0,0,displayconsts::DISPLAY_WIDTH, displayconsts::DISPLAY_HEIGHT));
     this->_hudView.setViewport(sf::FloatRect(0,0,1,1));
     this->_data = 0;
@@ -134,7 +132,6 @@ void GameScreen::draw(sf::RenderWindow* window, sf::Time delta)
     {
         _data->garden->draw(window,delta);
     }
-    window->setView(_seedView);
     if(_seedScreen != 0)
     {
         _seedScreen->draw(window,delta);
@@ -202,7 +199,6 @@ void GameScreen::update(sf::RenderWindow* window, sf::Time delta)
         // if the seed screen is open, let it do its own input handling.
         if(_seedScreen != 0 )
         {
-            window->setView(_seedView);
             _seedScreen->update(window, delta);
         }
         else

@@ -48,6 +48,10 @@ void Game::run()
                 _window->close();
                 quit = true;
             }
+            else if(event.type == sf::Event::MouseWheelMoved)
+            {
+                _mouse->_wheelDelta = event.mouseWheel.delta;
+            }
         }
         if(!quit)
         {

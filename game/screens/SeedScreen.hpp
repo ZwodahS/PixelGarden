@@ -21,6 +21,8 @@ class SeedScreen : public Screen
     private:
         std::vector<SeedSlot*> _drawSeeds;
         GameData* _data;
+        sf::View _view;
+        void moveView(int delta);
 };
 
 // this is an internal class of seed screen , so no point declaring outside of here.

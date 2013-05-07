@@ -1,6 +1,10 @@
 #include "SeedScreen.hpp"
 #include "../Game.hpp"
+#include "../consts.hpp"
 #include <iostream>
+
+#define MAX_COL 8
+
 
 SeedScreen::SeedScreen(Game* game,GameData* data)
     :Screen(game)
@@ -9,14 +13,24 @@ SeedScreen::SeedScreen(Game* game,GameData* data)
     _drawSeeds = std::vector<SeedSlot*>(0);
     // for each seed in the game, create a sprite for it.
     int i = 0;
+    int r = 0;
+    int c = 0;
     for(std::vector<Seed*>::iterator it = data->seedManager->getIterator() ; it != data->seedManager->end() ;it++)
     {
         SeedSlot* slot = new SeedSlot(_game,*it,_data->seedManager->getCount(*it));
-        slot->_position = sf::Vector2i(i*64,0);
+        slot->_position = sf::Vector2i(c*64,r*64);
         i++;
+        c++;
+        if(c == MAX_COL)
+        {
+            r++;
+            c=0;
+        }
         slot->updateValues();
         _drawSeeds.push_back(slot);
     }
+    _view = sf::View(sf::FloatRect(0,0,0.8f*displayconsts::DISPLAY_WIDTH, 0.8f * displayconsts::DISPLAY_HEIGHT));
+    _view.setViewport(sf::FloatRect(0.1f,0.1f,0.8f,0.8f));
 }
 
 SeedScreen::~SeedScreen()
@@ -29,6 +43,8 @@ SeedScreen::~SeedScreen()
 
 void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
 {
+    const sf::View currentView = window->getView();
+    window->setView(_view);
     sf::Vector2i pixelPos = _game->_mouse->getPosition(*window);
     sf::Vector2f position = window->mapPixelToCoords(pixelPos);
     for(int i = 0 ; i < _drawSeeds.size() ; i++)
@@ -42,10 +58,17 @@ void SeedScreen::draw(sf::RenderWindow* window, sf::Time delta)
             _drawSeeds[i]->draw(window,delta);
         }
     }
+    window->setView(currentView);
 }
 
 void SeedScreen::update(sf::RenderWindow* window, sf::Time delta)
 {
+    const sf::View currentView = window->getView();
+    if(_game->_mouse->_wheelDelta != 0)
+    {
+        moveView(_game->_mouse->_wheelDelta);
+    }
+    window->setView(_view);
     if(_game->_mouse->_left.thisReleased) // if the left mouse is released.
     {
         // set the selected seed to be the seed. perhaps hide the screen ?
@@ -65,6 +88,12 @@ void SeedScreen::update(sf::RenderWindow* window, sf::Time delta)
             _data->selectedSeed = seed;
         }
     }
+    window->setView(currentView);
+}
+
+void SeedScreen::moveView(int mouseDelta)
+{
+    _view.move(0,_game->_mouse->_wheelDelta*1.0f/2);
 }
 
 SeedSlot::SeedSlot(Game* game, Seed* seed, int count)
@@ -122,3 +151,4 @@ bool SeedSlot::contains(sf::Vector2f position)
 {
     return _containBound.contains(position);    
 }
+
