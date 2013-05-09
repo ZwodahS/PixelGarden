@@ -1,10 +1,10 @@
 The convention with the code should be describe here, in case i forget in the future.
 
-1) All Struct/Classes should be defined in their respective .h and .cpp. These should be capitialized.
-2) Function files should also be defined in their own .h and .cpp , but should use the format f_functions.h to denote that they contains only functions.
+1) All Struct/Classes should be defined in their respective .hpp and .cpp. These should be capitialized.
+2) Function files should also be defined in their own .hpp and .cpp , but should use the format f_functions.hpp to denote that they contains only functions.
    However, if a class is used internally by another class, it can be defined in the same file. Do so only if NO other class uses that internal class.
-3) If a class has a operator overloading, define them in their .h and .cpp
-4) Grouping headings can be done and their header files should be name g_groupname.h 
+3) If a class has a operator overloading, define them in their .hpp and .cpp
+4) Grouping headings can be done and their header files should be name g_groupname.hpp
 5) Pointers are used for all classes but not POD. This allow me to know exactly what i am dealing with.
    If POD needs to be passed by reference, such that the function modify the POD, reference(&) will be used instead of pointer.
    
@@ -16,8 +16,13 @@ The convention with the code should be describe here, in case i forget in the fu
    External structs will be treated differently depend on the 'weight' of the object, and their uses. Like SDL_Surface is always treated as a class,
    due to the nature that it is always pass by reference and consume a large memory. On the other SDL_Rect and SDL_Color is always treated as a 
    struct since they are always being copied instead of referenced.
-6) property of a class should have a _ prefix , like _age etc.
+
+   SFML Text has a weird behavior on mac and thus required it to use a pointer to reference it.
+
+6) property of a class should have a _ prefix , like _age etc. 
 7) property of structs will not have _ prefix.
+
+
 8) enums are usually defined within a namespace, to prevent conflict.
    example :
    
@@ -31,10 +36,3 @@ The convention with the code should be describe here, in case i forget in the fu
    }
 
    This is to prevent conflict of variable, and also provide a clarity to what it is.
-
-Framework code should take care of whether i am using SDL or Opengl.
-
-The game code should be made in such a way that they do not know anything regarding SDL. This mean that NO SDL code should appear in game folder.
-This is so that when it comes to the point that SDL become slow and not reach the required Framerate, I can change to opengl without changing any
-of the code in game.
-
