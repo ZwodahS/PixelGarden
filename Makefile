@@ -44,6 +44,7 @@ dist:
 	mkdir $(DIST)
 	cp -r assets $(DIST)
 	cp $(BIN) $(DIST)/$(OUTBIN)
+	zip -r dist.zip $(DIST)
 
 clean:
 	rm obj/*.o
